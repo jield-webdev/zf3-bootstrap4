@@ -16,75 +16,117 @@ class Badge extends AbstractHelper
     /**
      * @var string
      */
-    protected $format = '<span class="badge %s">%s</span>';
+    protected $format = '<span class="badge %s %s">%s</span>';
 
     /**
-     * Display an Informational Badge
+     * Display a primary Badge
      *
      * @param  string $badge
+     * @param bool $pill
      * @return string
      */
-    public function info($badge): string
+    public function primary($badge, $pill = false): string
     {
-        return $this->render($badge, 'badge-info');
+        return $this->render($badge, 'badge-primary', $pill);
     }
 
     /**
-     * Display an Important Badge
+     * Display a secondary Badge
      *
      * @param  string $badge
+     * @param bool $pill
      * @return string
      */
-    public function important($badge): string
+    public function secondary($badge, $pill = false): string
     {
-        return $this->render($badge, 'badge-important');
+        return $this->render($badge, 'badge-secondary', $pill);
     }
 
     /**
-     * Display an Inverse Badge
+     * Display an info Badge
      *
      * @param  string $badge
+     * @param bool $pill
      * @return string
      */
-    public function inverse($badge): string
+    public function info($badge, $pill = false): string
     {
-        return $this->render($badge, 'badge-inverse');
+        return $this->render($badge, 'badge-info', $pill);
     }
 
     /**
-     * Display a Sucess Badge
+     * Display a success Badge
      *
      * @param  string $badge
+     * @param bool $pill
      * @return string
      */
-    public function success($badge): string
+    public function success($badge, $pill = false): string
     {
-        return $this->render($badge, 'badge-success');
+        return $this->render($badge, 'badge-success', $pill);
     }
 
     /**
-     * Display a Warning Badge
+     * Display a warning Badge
      *
      * @param  string $badge
+     * @param bool $pill
      * @return string
      */
-    public function warning($badge): string
+    public function warning($badge, $pill = false): string
     {
-        return $this->render($badge, 'badge-warning');
+        return $this->render($badge, 'badge-warning', $pill);
     }
 
     /**
-     * Render an Badge
+     * Display a danger Badge
      *
      * @param  string $badge
-     * @param  string $class
+     * @param bool $pill
      * @return string
      */
-    public function render($badge, $class = ''): string
+    public function danger($badge, $pill = false): string
+    {
+        return $this->render($badge, 'badge-danger', $pill);
+    }
+
+    /**
+     * Display a light Badge
+     *
+     * @param  string $badge
+     * @param bool $pill
+     * @return string
+     */
+    public function light($badge, $pill = false): string
+    {
+        return $this->render($badge, 'badge-light', $pill);
+    }
+
+    /**
+     * Display a dark Badge
+     *
+     * @param  string $badge
+     * @param bool $pill
+     * @return string
+     */
+    public function dark($badge, $pill = false): string
+    {
+        return $this->render($badge, 'badge-dark', $pill);
+    }
+
+    /**
+     * Render the badge
+     *
+     * @param string $badge
+     * @param string $class
+     * @param bool $pill
+     * @return string
+     */
+    public function render(string $badge, string $class = '', bool $pill = false): string
     {
         $class = trim($class);
 
-        return sprintf($this->format, $class, $badge);
+        return sprintf($this->format, $class, $pill ? 'badge-pill' : '', $badge);
     }
 
     /**
@@ -92,12 +134,13 @@ class Badge extends AbstractHelper
      *
      * @param  string $badge
      * @param  string $class
+     * @param bool $pill
      * @return string|self
      */
-    public function __invoke($badge = null, $class = '')
+    public function __invoke($badge = null, string $class = '', bool $pill = false)
     {
-        if (null === $badge) {
-            return $this->render($badge, $class);
+        if (null !== $badge) {
+            return $this->render($badge, $class, $pill);
         }
 
         return $this;
