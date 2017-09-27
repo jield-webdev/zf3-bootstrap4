@@ -29,7 +29,9 @@ class Navigation extends ZendNavigation
         = [
             'zf3b4breadcrumbs' => Helper\Navigation\Breadcrumbs::class,
             'zf3b4menu'        => Helper\Navigation\Menu::class,
+            'ztbmenu'          => Helper\Navigation\Menu::class,
             'zf3b4submenu'     => Helper\Navigation\SubMenu::class,
+            'ztbsubmenu'       => Helper\Navigation\SubMenu::class,
         ];
 
     /**
