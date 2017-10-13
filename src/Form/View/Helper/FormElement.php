@@ -74,6 +74,8 @@ class FormElement extends ZendFormElement
         $groupWrapper = $groupWrapper ?: $this->groupWrapper;
         $controlWrapper = $controlWrapper ?: $this->controlWrapper;
 
+
+
         $hiddenElementForCheckbox = '';
         if (method_exists($element, 'useHiddenElement') && $element->useHiddenElement()) {
             // If we have hidden input with checkbox's unchecked value, render that separately so it can be prepended later, and unset it in the element
@@ -83,13 +85,6 @@ class FormElement extends ZendFormElement
         }
 
         $id = $element->getAttribute('id') ?: $element->getAttribute('name');
-
-        /**
-         * Dedicated control-wrapper for inline forms
-         */
-        if ($element->getOption('inline')) {
-            $controlWrapper = '%s%s%s';
-        }
 
         $classes = [$element->getAttribute('class')];
 
@@ -115,6 +110,11 @@ class FormElement extends ZendFormElement
 
         $element->setAttribute('class', implode(' ', $classes));
 
+        //Dedicated control-wrapper for inline form elemens
+        if ($element->getOption('inline')) {
+            $controlWrapper = '%s%s%s';
+        }
+
 
         $controlLabel = '';
         $label = $element->getLabel();
@@ -124,9 +124,19 @@ class FormElement extends ZendFormElement
 
         if ($label && !$element->getOption('skipLabel')) {
 
+            $labelClasses = [];
+
+            if (!$element->getOption('wrapCheckboxInLabel')) {
+                $labelClasses[] .= 'form-control-label';
+            }
+
+            if (!$element->getOption('inline')) {
+                $labelClasses[] .= 'col-md-2 text-right text-capitalize';
+            }
+
             $controlLabel .= $labelHelper->openTag(
                 [
-                    'class' => $element->getOption('wrapCheckboxInLabel') ? '' : 'form-control-label col-sm-2',
+                    'class' => implode(' ', $labelClasses),
                 ] + ($element->hasAttribute('id') ? ['for' => $id] : [])
             );
 
@@ -145,6 +155,15 @@ class FormElement extends ZendFormElement
                 $controlLabel .= $escapeHelper($label);
             }
             $controlLabel .= $labelHelper->closeTag();
+
+            //Wrap the checkboxes in special form-check-elements
+            if ($element instanceof \Zend\Form\Element\Checkbox && $element->getOption('inline')) {
+                $controlLabel = str_replace(
+                    ['<label', '</label>'],
+                    ['<h3', '</h3>'],
+                    $controlLabel
+                );
+            }
         }
 
         if ($element->getOption('wrapCheckboxInLabel')) {
@@ -153,7 +172,6 @@ class FormElement extends ZendFormElement
         } else {
             $controls = $elementHelper->render($element);
         }
-
 
 
         //Wrap the checkboxes in special form-check-elements
@@ -173,7 +191,6 @@ class FormElement extends ZendFormElement
         }
 
 
-
         //As of Bootstrap 4 the error element is wrapped in a div
         $errorElement = $elementErrorHelper->render($element);
         if (!empty($errorElement)) {
@@ -182,12 +199,13 @@ class FormElement extends ZendFormElement
 
         $html = $hiddenElementForCheckbox . $controlLabel . sprintf(
                 $controlWrapper,
-                 $controls,
-                $descriptionHelper->render($element),
-                $errorElement
+                $controls,
+                $errorElement,
+                $descriptionHelper->render($element)
+
             );
 
-        return sprintf($groupWrapper, (!$this->inline ? 'row' : ''), $id, $html);
+        return sprintf($groupWrapper, (!$element->getOption('inline') ? 'row' : ''), $id, $html);
     }
 
     /**
@@ -215,7 +233,7 @@ class FormElement extends ZendFormElement
      *
      * @return self
      */
-    public function setLabelHelper(FormLabel $labelHelper)
+    public function setLabelHelper(FormLabel $labelHelper): FormElement
     {
         $labelHelper->setView($this->getView());
         $this->labelHelper = $labelHelper;

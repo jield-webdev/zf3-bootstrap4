@@ -8,7 +8,7 @@ return [
     'view_helpers' => [
         'aliases'    => [
             'zf3b4navigation'    => Helper\Navigation::class,
-            'ztbnavigation'       => Helper\Navigation::class,
+            'ztbnavigation'      => Helper\Navigation::class,
             'ztbformelement'     => 'zf3b4formelement',
             'ztbformdescription' => 'zf3b4fordescription',
             'ztbbadge'           => 'zf3b4badge',
