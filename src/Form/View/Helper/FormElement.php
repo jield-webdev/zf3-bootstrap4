@@ -48,7 +48,7 @@ class FormElement extends ZendFormElement
     /**
      * @var string
      */
-    protected $controlWrapper = '<div class="col-sm-10">%s%s%s</div>';
+    protected $controlWrapper = '<div class="col-md-9">%s%s%s</div>';
     /**
      * @var bool
      */
@@ -131,7 +131,12 @@ class FormElement extends ZendFormElement
             }
 
             if (!$element->getOption('inline')) {
-                $labelClasses[] .= 'col-md-2 text-right text-capitalize';
+                $labelClasses[] .= 'col-md-3 text-right';
+            }
+
+            //Wrap the checkboxes in special form-check-elements
+            if ($element instanceof \Zend\Form\Element\Checkbox && $element->getOption('inline')) {
+                $labelClasses[] .= 'col-form-label-lg';
             }
 
             $controlLabel .= $labelHelper->openTag(
@@ -157,13 +162,13 @@ class FormElement extends ZendFormElement
             $controlLabel .= $labelHelper->closeTag();
 
             //Wrap the checkboxes in special form-check-elements
-            if ($element instanceof \Zend\Form\Element\Checkbox && $element->getOption('inline')) {
-                $controlLabel = str_replace(
-                    ['<label', '</label>'],
-                    ['<h3', '</h3>'],
-                    $controlLabel
-                );
-            }
+//            if ($element instanceof \Zend\Form\Element\Checkbox && $element->getOption('inline')) {
+//                $controlLabel = str_replace(
+//                    ['col-form-label'],
+//                    ['col-form-label col-form-label-lg', '</div>'],
+//                    $controlLabel
+//                );
+//            }
         }
 
         if ($element->getOption('wrapCheckboxInLabel')) {
