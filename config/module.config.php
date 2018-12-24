@@ -19,10 +19,11 @@ return [
             Helper\Navigation::class => Navigation\View\NavigationHelperFactory::class,
         ],
         'invokables' => [
-            'zf3b4formelement'    => View\Helper\FormElement::class,
-            'zf3b4fordescription' => View\Helper\FormDescription::class,
-            'zf3b4badge'          => Helper\Badge::class,
-            'zf3b4alert'          => Helper\Alert::class,
+            'zf3b4formelement'      => View\Helper\FormElement::class,
+            'zf3b4filterbarelement' => View\Helper\FilterBarElement::class,
+            'zf3b4fordescription'   => View\Helper\FormDescription::class,
+            'zf3b4badge'            => Helper\Badge::class,
+            'zf3b4alert'            => Helper\Alert::class,
         ],
     ],
 ];

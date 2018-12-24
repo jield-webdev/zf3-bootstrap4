@@ -48,24 +48,23 @@ class FormElement extends ZendFormElement
     /**
      * @var string
      */
-    protected $controlWrapper = '<div class="col-md-9">%s%s%s</div>';
+    protected $controlWrapper = '<div class="col-sm-9">%s%s%s</div>';
     /**
      * @var bool
      */
     protected $inline = false;
 
+    public function __invoke(ElementInterface $element = null, $groupWrapper = null, $controlWrapper = null) {
+        if ($element) {
+            return $this->render($element, $groupWrapper, $controlWrapper);
+        }
 
-    /**
-     * Render
-     *
-     * @param  \Zend\Form\ElementInterface $element
-     * @param  string $groupWrapper
-     * @param  string $controlWrapper
-     *
-     * @return string
-     */
-    public function render(ElementInterface $element, $groupWrapper = null, $controlWrapper = null)
-    {
+        return $this;
+    }
+
+    public function render(ElementInterface $element, $groupWrapper = null, $controlWrapper = null,
+        bool $dropdown = false
+    ) {
         $labelHelper = $this->getLabelHelper();
         $escapeHelper = $this->getEscapeHtmlHelper();
         $elementHelper = $this->getElementHelper();
@@ -73,8 +72,6 @@ class FormElement extends ZendFormElement
         $descriptionHelper = $this->getDescriptionHelper();
         $groupWrapper = $groupWrapper ?: $this->groupWrapper;
         $controlWrapper = $controlWrapper ?: $this->controlWrapper;
-
-
 
         $hiddenElementForCheckbox = '';
         if (method_exists($element, 'useHiddenElement') && $element->useHiddenElement()) {
@@ -127,16 +124,16 @@ class FormElement extends ZendFormElement
             $labelClasses = [];
 
             if (!$element->getOption('wrapCheckboxInLabel')) {
-                $labelClasses[] .= 'form-control-label';
+                $labelClasses[] .= 'col-form-label';
             }
 
             if (!$element->getOption('inline')) {
-                $labelClasses[] .= 'col-md-3 text-right';
+                $labelClasses[] .= 'col-sm-3';
             }
 
             //Wrap the checkboxes in special form-check-elements
-            if ($element instanceof \Zend\Form\Element\Checkbox && $element->getOption('inline')) {
-                $labelClasses[] .= 'col-form-label-lg';
+            if ($element instanceof \Zend\Form\Element\Checkbox) {
+                $labelClasses[] .= 'col-form-label pt-0';
             }
 
             $controlLabel .= $labelHelper->openTag(
@@ -160,15 +157,6 @@ class FormElement extends ZendFormElement
                 $controlLabel .= $escapeHelper($label);
             }
             $controlLabel .= $labelHelper->closeTag();
-
-            //Wrap the checkboxes in special form-check-elements
-//            if ($element instanceof \Zend\Form\Element\Checkbox && $element->getOption('inline')) {
-//                $controlLabel = str_replace(
-//                    ['col-form-label'],
-//                    ['col-form-label col-form-label-lg', '</div>'],
-//                    $controlLabel
-//                );
-//            }
         }
 
         if ($element->getOption('wrapCheckboxInLabel')) {
@@ -180,17 +168,40 @@ class FormElement extends ZendFormElement
 
 
         //Wrap the checkboxes in special form-check-elements
-        if ($element instanceof \Zend\Form\Element\Checkbox) {
-            $controls = str_replace(
-                ['<label', '</label>'],
-                ['<div class="form-check"><label class="form-check-label"', '</label></div>'],
-                $controls
-            );
+        if (!$dropdown) {
+            if ($element instanceof \Zend\Form\Element\Checkbox) {
+                $controls = str_replace(
+                    ['<label', '</label>'],
+                    ['<div class="form-check"><label class="form-check-label"', '</label></div>'],
+                    $controls
+                );
+            }
         }
 
-        if ($element instanceof \Zend\Form\Element\Hidden ||
-            $element instanceof \Zend\Form\Element\Submit ||
-            $element instanceof \Zend\Form\Element\Button
+        if ($dropdown) {
+
+            if ($element instanceof \Zend\Form\Element\Checkbox) {
+                $controls = str_replace(
+                    ['<label>', '</label>'],
+                    ['<a class="dropdown-item">', '</a>'],
+                    $controls
+                );
+            }
+
+            $html = sprintf(
+                "%s%s",
+                $controls,
+                $descriptionHelper->render($element)
+
+            );
+
+            return \sprintf($groupWrapper, $html);
+        }
+
+
+        if ($element instanceof \Zend\Form\Element\Hidden
+            || $element instanceof \Zend\Form\Element\Submit
+            || $element instanceof \Zend\Form\Element\Button
         ) {
             return $controls . $elementErrorHelper->render($element);
         }
@@ -214,39 +225,6 @@ class FormElement extends ZendFormElement
     }
 
     /**
-     * Magical Invoke
-     *
-     * @param  \Zend\Form\ElementInterface $element
-     * @param  string $groupWrapper
-     * @param  string $controlWrapper
-     *
-     * @return string|self
-     */
-    public function __invoke(ElementInterface $element = null, $groupWrapper = null, $controlWrapper = null)
-    {
-        if ($element) {
-            return $this->render($element, $groupWrapper, $controlWrapper);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Set Label Helper
-     *
-     * @param  \Zend\Form\View\Helper\FormLabel $labelHelper
-     *
-     * @return self
-     */
-    public function setLabelHelper(FormLabel $labelHelper): FormElement
-    {
-        $labelHelper->setView($this->getView());
-        $this->labelHelper = $labelHelper;
-
-        return $this;
-    }
-
-    /**
      * Get Label Helper
      *
      * @return \Zend\Form\View\Helper\FormLabel
@@ -261,16 +239,16 @@ class FormElement extends ZendFormElement
     }
 
     /**
-     * Set EscapeHtml Helper
+     * Set Label Helper
      *
-     * @param  \Zend\View\Helper\EscapeHtml $escapeHelper
+     * @param  \Zend\Form\View\Helper\FormLabel $labelHelper
      *
      * @return self
      */
-    public function setEscapeHtmlHelper(EscapeHtml $escapeHelper)
+    public function setLabelHelper(FormLabel $labelHelper): FormElement
     {
-        $escapeHelper->setView($this->getView());
-        $this->escapeHelper = $escapeHelper;
+        $labelHelper->setView($this->getView());
+        $this->labelHelper = $labelHelper;
 
         return $this;
     }
@@ -290,16 +268,16 @@ class FormElement extends ZendFormElement
     }
 
     /**
-     * Set Element Helper
+     * Set EscapeHtml Helper
      *
-     * @param  \Zend\Form\View\Helper\FormElement $elementHelper
+     * @param  \Zend\View\Helper\EscapeHtml $escapeHelper
      *
      * @return self
      */
-    public function setElementHelper(ZendFormElement $elementHelper): self
+    public function setEscapeHtmlHelper(EscapeHtml $escapeHelper)
     {
-        $elementHelper->setView($this->getView());
-        $this->elementHelper = $elementHelper;
+        $escapeHelper->setView($this->getView());
+        $this->escapeHelper = $escapeHelper;
 
         return $this;
     }
@@ -319,17 +297,16 @@ class FormElement extends ZendFormElement
     }
 
     /**
-     * Set Element Error Helper
+     * Set Element Helper
      *
-     * @param  \Zend\Form\View\Helper\FormElementErrors $errorHelper
+     * @param  \Zend\Form\View\Helper\FormElement $elementHelper
      *
      * @return self
      */
-    public function setElementErrorHelper(FormElementErrors $errorHelper): self
+    public function setElementHelper(ZendFormElement $elementHelper): self
     {
-        $errorHelper->setView($this->getView());
-
-        $this->elementErrorHelper = $errorHelper;
+        $elementHelper->setView($this->getView());
+        $this->elementHelper = $elementHelper;
 
         return $this;
     }
@@ -349,16 +326,17 @@ class FormElement extends ZendFormElement
     }
 
     /**
-     * Set Description Helper
+     * Set Element Error Helper
      *
-     * @param FormDescription
+     * @param  \Zend\Form\View\Helper\FormElementErrors $errorHelper
      *
      * @return self
      */
-    public function setDescriptionHelper(FormDescription $descriptionHelper): self
+    public function setElementErrorHelper(FormElementErrors $errorHelper): self
     {
-        $descriptionHelper->setView($this->getView());
-        $this->descriptionHelper = $descriptionHelper;
+        $errorHelper->setView($this->getView());
+
+        $this->elementErrorHelper = $errorHelper;
 
         return $this;
     }
@@ -378,15 +356,16 @@ class FormElement extends ZendFormElement
     }
 
     /**
-     * Set Group Wrapper
+     * Set Description Helper
      *
-     * @param  string $groupWrapper
+     * @param FormDescription
      *
      * @return self
      */
-    public function setGroupWrapper($groupWrapper): self
+    public function setDescriptionHelper(FormDescription $descriptionHelper): self
     {
-        $this->groupWrapper = (string)$groupWrapper;
+        $descriptionHelper->setView($this->getView());
+        $this->descriptionHelper = $descriptionHelper;
 
         return $this;
     }
@@ -402,15 +381,15 @@ class FormElement extends ZendFormElement
     }
 
     /**
-     * Set Control Wrapper
+     * Set Group Wrapper
      *
-     * @param  string $controlWrapper ;
+     * @param  string $groupWrapper
      *
      * @return self
      */
-    public function setControlWrapper($controlWrapper): self
+    public function setGroupWrapper($groupWrapper): self
     {
-        $this->controlWrapper = (string)$controlWrapper;
+        $this->groupWrapper = (string)$groupWrapper;
 
         return $this;
     }
@@ -423,5 +402,19 @@ class FormElement extends ZendFormElement
     public function getControlWrapper(): string
     {
         return $this->controlWrapper;
+    }
+
+    /**
+     * Set Control Wrapper
+     *
+     * @param  string $controlWrapper ;
+     *
+     * @return self
+     */
+    public function setControlWrapper($controlWrapper): self
+    {
+        $this->controlWrapper = (string)$controlWrapper;
+
+        return $this;
     }
 }

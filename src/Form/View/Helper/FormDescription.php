@@ -16,12 +16,12 @@ class FormDescription extends AbstractHelper
     /**
      * @var string wrapper for displaying block help
      */
-    protected $blockWrapper = '<p class="form-text text-muted">%s</p>';
+    protected $blockWrapper = '<small class="form-text text-muted">%s</small>';
 
     /**
      * @var string wrapper for displaying inline help
      */
-    protected $inlineWrapper = '<small class="text-muted">%s</small>';
+    protected $inlineWrapper = '<small class="form-text text-muted">%s</small>';
 
     /**
      * Set Block Wrapper
