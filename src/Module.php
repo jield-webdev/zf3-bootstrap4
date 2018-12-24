@@ -8,15 +8,12 @@ namespace Zf3Bootstrap4;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
 /**
- * Module Setup
+ * Class Module
+ *
+ * @package Zf3Bootstrap4
  */
-class Module implements ConfigProviderInterface
+final class Module implements ConfigProviderInterface
 {
-    /**
-     * Get Config
-     *
-     * @return array
-     */
     public function getConfig(): array
     {
         return include __DIR__ . '/../config/module.config.php';

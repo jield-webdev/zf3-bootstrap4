@@ -10,8 +10,7 @@ return [
             'zf3b4navigation'    => Helper\Navigation::class,
             'ztbnavigation'      => Helper\Navigation::class,
             'ztbformelement'     => 'zf3b4formelement',
-            'ztbformdescription' => 'zf3b4fordescription',
-            'ztbbadge'           => 'zf3b4badge',
+            'ztbformdescription' => 'zf3b4formdescription',
             'ztbalert'           => 'zf3b4alert',
 
         ],
@@ -21,8 +20,8 @@ return [
         'invokables' => [
             'zf3b4formelement'      => View\Helper\FormElement::class,
             'zf3b4filterbarelement' => View\Helper\FilterBarElement::class,
-            'zf3b4fordescription'   => View\Helper\FormDescription::class,
-            'zf3b4badge'            => Helper\Badge::class,
+            'zf3b4formdescription'  => View\Helper\FormDescription::class,
+            'zf3b4forminput'        => View\Helper\FormInput::class,
             'zf3b4alert'            => Helper\Alert::class,
         ],
     ],
