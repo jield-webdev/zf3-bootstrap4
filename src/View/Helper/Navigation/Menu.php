@@ -109,7 +109,8 @@ class Menu extends ZendMenu
                 if ($depth === 0) {
                     $html .= $myIndent . '<ul' . $ulClass . '>' . PHP_EOL;
                 } else {
-                    $html .= $myIndent . '<div class="dropdown-menu" area-labelled-by="menu-' . md5($page->getTitle()) .'">' . PHP_EOL;
+                    $html .= $myIndent . '<div class="dropdown-menu" area-labelled-by="menu-' . md5($page->getTitle())
+                        . '">' . PHP_EOL;
                 }
             }
 
@@ -169,10 +170,11 @@ class Menu extends ZendMenu
             'title' => $this->translate($page->getTitle(), $page->getTextDomain()),
         ];
 
-
         $class[] = $page->getClass();
 
-        if (!$isChild && $page->hasPages()) {
+
+
+        if (!$isChild && $page->hasPages(true)) {
             $attribs['data-toggle'] = 'dropdown';
             $attribs['aria-haspopup'] = 'true';
             $attribs['aria-expanded'] = 'false';
@@ -189,10 +191,11 @@ class Menu extends ZendMenu
 
         // does page have a href?
         $href = $page->getHref();
+
         if ($href) {
             $element = 'a';
-            if (!$isChild && $page->hasPages()) {
-                    $href = '#';
+            if (!$isChild && $page->hasPages(true)) {
+                $href = '#';
             }
             $attribs['href'] = $href;
             $attribs['target'] = $page->getTarget();
@@ -200,7 +203,7 @@ class Menu extends ZendMenu
             $element = 'span';
         }
 
-        if (count($class) > 0) {
+        if (\count($class) > 0) {
             $attribs['class'] = trim(implode(' ', $class));
         }
 
