@@ -16,8 +16,6 @@ use Zend\Form\ElementInterface;
  */
 class FilterBarElement extends FormElement
 {
-
-
     public function __invoke(ElementInterface $element = null, $groupWrapper = null, $controlWrapper = null)
     {
 
@@ -44,11 +42,9 @@ class FilterBarElement extends FormElement
                 <ul class="navbar-nav mr-auto">
                      %s                   
                 </ul>
-                <div class="input-group col-lg-5">%s
-                    <div class="input-group-append">
+                <div class="form-inline">%s
                         %s
                         %s
-                    </div>
                 </div>
             </div>
         </nav>
@@ -73,15 +69,13 @@ class FilterBarElement extends FormElement
     {
         $facets = [];
 
-        $facetWrapper = '  <li class="nav-item dropdown">
+        $facetWrapper
+            = '<li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="searchDropdown-%d" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             %s
-                        </a>
-                        
-                        <div class="dropdown-menu inactive" area-labelledby="searchDropdown-%d">%s</div>
-
-                        
+                        </a>                        
+                        <div class="dropdown-menu inactive" area-labelledby="searchDropdown-%d">%s</div>                        
                     </li>';
 
 
@@ -93,30 +87,31 @@ class FilterBarElement extends FormElement
         }
 
         return \implode(PHP_EOL, $facets);
-
-
     }
 
-
-    private function renderRaw(ElementInterface $element): string
+    private function renderRaw(ElementInterface $element): ?string
     {
-        $elementHelper = $this->getElementHelper();
-        $descriptionHelper = $this->getDescriptionHelper();
-        $controls = $elementHelper->render($element);
+        $type = $element->getAttribute('type');
 
-        $controls = str_replace(
-            ['<label>', '</label>'],
-            ['<span class="d-block dropdown-item"><label>', '</label></span>'],
-            $controls
-        );
+        switch ($type) {
+            case 'multi_checkbox':
+                //Get the helper
+                /** @var FormMultiCheckbox $formMultiCheckbox */
+                $formMultiCheckbox = $this->getView()->plugin('zf3b4formmulticheckbox');
+                $formMultiCheckbox->setTemplate('<div class="dropdown-item"><div class="form-check">%s%s%s%s</div></div>');
 
-        $html = sprintf(
-            "%s%s",
-            $controls,
-            $descriptionHelper->render($element)
 
-        );
-
-        return \sprintf('%s', $html);
+                return $formMultiCheckbox->render($element);
+            case 'text':
+                return $this->renderHelper('zf3b4forminput', $element);
+            case 'button':
+                $element->setAttribute('class', 'btn btn-outline-success ml-2 my-2 my-sm-0');
+                if ($element->getName() === 'reset') {
+                    $element->setAttribute('class', 'btn btn-outline-danger ml-2 my-2 my-sm-0');
+                }
+                return $this->renderHelper('formbutton', $element);
+            default:
+                return $this->renderHelper($type, $element);
+        }
     }
 }

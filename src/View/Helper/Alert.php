@@ -35,7 +35,11 @@ class Alert extends AbstractHelper
         $class = \trim($class);
 
         return \sprintf(
-            $this->format, $class, $dismissableClass, $closeButton, $alert
+            $this->format,
+            $class,
+            $dismissableClass,
+            $closeButton,
+            $alert
         );
     }
 

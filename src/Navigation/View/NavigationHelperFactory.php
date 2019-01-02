@@ -23,5 +23,4 @@ final class NavigationHelperFactory implements FactoryInterface
 
         return $helper;
     }
-
 }

@@ -52,8 +52,7 @@ class SubMenu extends ZendMenu
         $escapeLabels,
         $addClassToListItem,
         $liActiveClass
-    )
-    {
+    ) {
 
         $html = '<ul class="nav-sub-menu ' . $ulClass . '">';
 
@@ -68,8 +67,10 @@ class SubMenu extends ZendMenu
 
 
         // create iterator
-        $iterator = new RecursiveIteratorIterator($container,
-            RecursiveIteratorIterator::SELF_FIRST);
+        $iterator = new RecursiveIteratorIterator(
+            $container,
+            RecursiveIteratorIterator::SELF_FIRST
+        );
 
         // iterate container
         $prevDepth = -1;
@@ -170,8 +171,7 @@ class SubMenu extends ZendMenu
         $class[] = $page->getClass();
         $class[] = 'flex-sm-fill text-sm-center nav-link';
 
-        if ($page->isActive())
-        {
+        if ($page->isActive()) {
             $class[] = 'active';
         }
 

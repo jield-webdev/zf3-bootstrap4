@@ -1,12 +1,11 @@
 <?php
 
-
 namespace Zf3Bootstrap4\Form\View\Helper;
 
 use Zend\Form\ElementInterface;
 use Zend\Form\View\Helper;
 
-final class FormInput extends Helper\FormInput
+final class FormSelect extends Helper\FormSelect
 {
     public function render(ElementInterface $element)
     {

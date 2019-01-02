@@ -23,20 +23,6 @@ class Menu extends ZendMenu
      */
     protected $ulClass = 'nav';
 
-    /**
-     * Renders a normal menu (called from {@link renderMenu()}).
-     *
-     * @param  AbstractContainer $container container to render
-     * @param  string $ulClass CSS class for first UL
-     * @param  string $indent initial indentation
-     * @param  int|null $minDepth minimum depth
-     * @param  int|null $maxDepth maximum depth
-     * @param  bool $onlyActive render only active branch?
-     * @param  bool $escapeLabels Whether or not to escape the labels
-     * @param  bool $addClassToListItem Whether or not page class applied to <li> element
-     * @param  string $liActiveClass CSS class for active LI
-     * @return string
-     */
     protected function renderNormalMenu(
         AbstractContainer $container,
         $ulClass,
@@ -62,6 +48,7 @@ class Menu extends ZendMenu
             $foundDepth = $found['depth'];
         } else {
             $foundPage = null;
+            $foundDepth = null;
         }
 
         // create iterator
@@ -110,7 +97,7 @@ class Menu extends ZendMenu
 
             // make sure indentation is correct
             $depth -= $minDepth;
-            $myIndent = $indent . str_repeat('    ', $depth + 1);
+            $myIndent = $indent . \str_repeat('    ', $depth + 1);
             if ($depth > $prevDepth) {
                 // start new ul tag
                 if ($ulClass && $depth == 0) {
@@ -147,8 +134,7 @@ class Menu extends ZendMenu
             if ($depth < $prevDepth) {
                 $html .= '       ' . $myIndent . '</div>' . PHP_EOL;
 
-                if ($depth === 0)
-                {
+                if ($depth === 0) {
                     $html .= '    ' . '</li>' . PHP_EOL;
                 }
             }
@@ -175,17 +161,6 @@ class Menu extends ZendMenu
         return $html;
     }
 
-    /**
-     * Returns an HTML string containing an 'a' element for the given page if
-     * the page's href is not empty, and a 'span' element if it is empty.
-     *
-     * Overrides {@link AbstractHelper::htmlify()}.
-     *
-     * @param  AbstractPage $page page to generate HTML for
-     * @param  bool $escapeLabel Whether or not to escape the label
-     * @param  bool $isChild Whether or not to add the page class to the list item
-     * @return string
-     */
     public function htmlify(AbstractPage $page, $escapeLabel = true, $isChild = false): string
     {
         // get attribs for element
@@ -204,7 +179,6 @@ class Menu extends ZendMenu
             $attribs['role'] = 'button';
             $attribs['id'] = md5($page->getTitle());
             $class[] = 'dropdown-toggle';
-
         }
 
         if ($isChild) {
