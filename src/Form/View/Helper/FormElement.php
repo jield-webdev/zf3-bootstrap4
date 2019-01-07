@@ -16,6 +16,25 @@ use Zend\View\Helper\EscapeHtml;
  */
 class FormElement extends ZendFormElement
 {
+<<<<<<< Updated upstream
+=======
+    protected $typeMap
+        = [
+            'text'           => 'zf3b4forminput',
+            'email'          => 'zf3b4forminput',
+            'number'         => 'zf3b4forminput',
+            'password'       => 'zf3b4forminput',
+            'url'            => 'zf3b4forminput',
+            'checkbox'       => 'zf3b4formcheckbox',
+            'file'           => 'zf3b4formfile',
+            'textarea'       => 'zf3b4formtextarea',
+            'radio'          => 'zf3b4formradio',
+            'datetime'       => 'zf3b4forminput',
+            'date'           => 'zf3b4forminput',
+            'select'         => 'zf3b4formselect',
+            'multi_checkbox' => 'zf3b4formmulticheckbox',
+        ];
+>>>>>>> Stashed changes
     /**
      * @var \Zend\Form\View\Helper\FormLabel
      */
@@ -29,7 +48,84 @@ class FormElement extends ZendFormElement
     /**
      * @var \Zend\View\Helper\EscapeHtml
      */
+<<<<<<< Updated upstream
     protected $escapeHelper;
+=======
+    private $formDescription;
+    /**
+     * @var Helper\FormElementErrors
+     */
+    private $formElementErrors;
+    /**
+     * @var Translator
+     */
+    private $translator;
+    private $inline = false;
+
+    private $inlineWrapper = '<div class="form-group">%s%s%s%s</div>';
+    private $horizonalWrapper = '<div class="form-group row">%s<div class="col-sm-9">%s%s%s</div></div>';
+    private $radioWrapper = '<fieldset class="form-group">
+                                <div class="row">
+                                    <legend class="col-form-label col-sm-3 pt-0">%s</legend>
+                                    <div class="col-sm-9">
+                                        %s
+                                        %s
+                                        %s
+                                    </div>
+                                </div>
+                             </fieldset>';
+    private $inlineRadioWrapper = '<div class="form-group">
+                                    <strong class="col-form-label">%s</strong>
+                                        %s
+                                        %s
+                                        %s                                
+                             </div>';
+    private $checkboxWrapper = '<div class="form-group row">
+                                    <div class="col-form-label col-sm-3 pt-0">%s</div>
+                                    <div class="col-sm-9">
+                                        %s
+                                        %s
+                                        %s
+                                    </div>
+                             </div>';
+    private $inlineCheckboxWrapper = '<div class="form-group">
+                                    <strong class="col-form-label">%s</strong>
+                                        %s
+                                        %s
+                                        %s
+                                    </div>';
+    private $singleCheckboxWrapper = '<div class="form-group row">
+                                                <div class="col-sm-3 offset-sm-3">
+                                                    <div class="custom-control custom-switch">
+                                                        %s
+                                                        %s
+                                                    </div>
+                                                </div>    
+                                            </div>';
+    private $inlineSingleCheckboxWrapper = '<div class="custom-control custom-checkbox">
+                                        %s
+                                        %s
+                                    </div>';
+
+    private $test = '<div class="form-group row">
+    <div class="col-sm-2">Checkbox</div>
+    <div class="col-sm-10">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="gridCheck1">
+        <label class="form-check-label" for="gridCheck1">
+          Example checkbox
+        </label>
+      </div>
+    </div>
+  </div>';
+
+    public function __construct(HelperPluginManager $viewHelperManager, Translator $translator)
+    {
+        $this->formLabel = $viewHelperManager->get('formlabel');
+        $this->escapeHtml = $viewHelperManager->get('escapehtml');
+        $this->formDescription = $viewHelperManager->get('zf3b4formdescription');
+        $this->formElementErrors = $viewHelperManager->get('formelementerrors');
+>>>>>>> Stashed changes
 
     /**
      * @var \Zend\Form\View\Helper\FormElementErrors
@@ -159,12 +255,21 @@ class FormElement extends ZendFormElement
             $controlLabel .= $labelHelper->closeTag();
         }
 
+<<<<<<< Updated upstream
         if ($element->getOption('wrapCheckboxInLabel')) {
             $controls = $controlLabel;
             $controlLabel = '';
         } else {
             $controls = $elementHelper->render($element);
         }
+=======
+        if (isset($this->typeMap[$type])) {
+            //Produce the label
+            $label = $this->findLabel($element);
+            $renderedElement = $this->renderHelper($this->typeMap[$type], $element);
+            $description = $this->parseDescription($element);
+            $error = $this->hasFormElementError($element) ? $this->parseFormElementError($element) : null;
+>>>>>>> Stashed changes
 
 
         //Wrap the checkboxes in special form-check-elements
@@ -178,6 +283,7 @@ class FormElement extends ZendFormElement
             }
         }
 
+<<<<<<< Updated upstream
         if ($dropdown) {
 
             if ($element instanceof \Zend\Form\Element\Checkbox) {
@@ -186,6 +292,40 @@ class FormElement extends ZendFormElement
                     ['<a class="dropdown-item">', '</a>'],
                     $controls
                 );
+=======
+            switch ($type) {
+                case 'radio':
+                    $wrapper = $this->radioWrapper;
+
+                    if ($this->inline) {
+                        $wrapper = $this->inlineRadioWrapper;
+                    }
+                    break;
+                case 'multi_checkbox':
+                    $wrapper = $this->checkboxWrapper;
+
+                    if ($this->inline) {
+                        $wrapper = $this->inlineCheckboxWrapper;
+                    }
+                    break;
+                case 'checkbox':
+                    $wrapper = $this->singleCheckboxWrapper;
+
+                    if ($this->inline) {
+                        $wrapper = $this->inlineSingleCheckboxWrapper;
+                    }
+
+                    $label = '<label class="custom-control-label" for="' . \md5($element->getName()) . '">' . $label
+                        . '</label>';
+                    return \sprintf($wrapper, $renderedElement, $label, $error, $description);
+
+                    break;
+                case 'submit':
+                case 'button':
+                    return $renderedElement;
+                default:
+                    $label = $this->parseLabel($element);
+>>>>>>> Stashed changes
             }
 
             $html = sprintf(
@@ -224,17 +364,22 @@ class FormElement extends ZendFormElement
         return sprintf($groupWrapper, (!$element->getOption('inline') ? 'row' : ''), $id, $html);
     }
 
+<<<<<<< Updated upstream
     /**
      * Get Label Helper
      *
      * @return \Zend\Form\View\Helper\FormLabel
      */
     public function getLabelHelper()
+=======
+    private function findLabel(ElementInterface $element): ?string
+>>>>>>> Stashed changes
     {
         if (!$this->labelHelper) {
             $this->setLabelHelper($this->view->plugin('formlabel'));
         }
 
+<<<<<<< Updated upstream
         return $this->labelHelper;
     }
 
@@ -368,6 +513,13 @@ class FormElement extends ZendFormElement
         $this->descriptionHelper = $descriptionHelper;
 
         return $this;
+=======
+        if (null !== ($translator = $this->formLabel->getTranslator())) {
+            $label = $translator->translate($label);
+        }
+
+        return $label;
+>>>>>>> Stashed changes
     }
 
     /**
@@ -416,5 +568,28 @@ class FormElement extends ZendFormElement
         $this->controlWrapper = (string)$controlWrapper;
 
         return $this;
+    }
+
+    private function parseLabel(ElementInterface $element): string
+    {
+        $label = $this->findLabel($element);
+
+        $openTagAttributes = ['for' => $element->getName()];
+
+        if (!$this->inline) {
+            $openTagAttributes['class'] = 'col-sm-3 col-form-label';
+        }
+
+        $openTag = $this->formLabel->openTag($openTagAttributes);
+
+
+        if (!$element instanceof LabelAwareInterface || !$element->getLabelOption('disable_html_escape')) {
+            $label = $this->escapeHtml->__invoke($label);
+        }
+
+        return $openTag . $label . $this->formLabel->closeTag();
+
+
+        return \sprintf('%s%s', $this->formLabel->openTag(), $this->formLabel->closeTag());
     }
 }
