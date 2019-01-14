@@ -1,32 +1,37 @@
 {
-  "name": "jield-webdev/zf3-bootstrap4",
-  "description": "Zend Framework Module that provides helper functions for Bootstrap 4",
-  "type": "library",
-  "keywords": [
-    "bootstrap",
-    "module",
-    "zf"
-  ],
-  "license": "MIT",
-  "homepage": "https://github.com/jield-webdev/zf3-bootstrap4",
-  "authors": [
-    {
-      "name": "Johan van der Heide",
-      "email": "info@jield.nl",
-      "homepage": "https://jield.nl"
+    "name": "jield-webdev/zf3-bootstrap4",
+    "description": "Zend Framework Module that provides helper functions for Bootstrap 4",
+    "type": "library",
+    "keywords": [
+        "bootstrap",
+        "module",
+        "zf"
+    ],
+    "license": "MIT License",
+    "homepage": "https://github.com/jield-webdev/zf3-bootstrap4",
+    "authors": [
+        {
+            "name": "Johan van der Heide",
+            "email": "info@jield.nl",
+            "homepage": "https://jield.nl"
+        },
+        {
+            "name": "Mike Willbanks",
+            "email": "mike@digitalstruct.com",
+            "homepage": "http://blog.digitalstruct.com/"
+        }
+    ],
+    "require": {
+        "php": "^7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zf3Bootstrap4\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zf3Bootstrap4Test\\": "tests"
+        }
     }
-  ],
-  "require": {
-    "php": "^7.1"
-  },
-  "autoload": {
-    "psr-4": {
-      "Zf3Bootstrap4\\": "src"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Zf3Bootstrap4Test\\": "tests"
-    }
-  }
 }
