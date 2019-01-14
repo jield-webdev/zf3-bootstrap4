@@ -5,7 +5,7 @@ namespace Zf3Bootstrap4\Form\View\Helper;
 use Zend\Form\ElementInterface;
 use Zend\Form\View\Helper;
 
-final class FormFile extends Helper\FormInput
+final class FormFile extends Helper\FormFile
 {
     public function render(ElementInterface $element)
     {
