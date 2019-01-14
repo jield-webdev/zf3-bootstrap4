@@ -16,7 +16,9 @@ class FormElement extends Helper\FormElement
             'text'           => 'zf3b4forminput',
             'email'          => 'zf3b4forminput',
             'number'         => 'zf3b4forminput',
+            'password'       => 'zf3b4forminput',
             'url'            => 'zf3b4forminput',
+            'checkbox'       => 'zf3b4formcheckbox',
             'file'           => 'zf3b4formfile',
             'textarea'       => 'zf3b4formtextarea',
             'radio'          => 'zf3b4formradio',
@@ -65,17 +67,29 @@ class FormElement extends Helper\FormElement
                                         %s
                                         %s                                
                              </div>';
-    private $checkboxWrapper = '<fieldset class="form-group row">
+    private $checkboxWrapper = '<div class="form-group row">
                                     <div class="col-form-label col-sm-3 pt-0">%s</div>
                                     <div class="col-sm-9">
                                         %s
                                         %s
                                         %s
                                     </div>
-                             </fieldset>';
+                             </div>';
     private $inlineCheckboxWrapper = '<div class="form-group">
                                     <strong class="col-form-label">%s</strong>
                                         %s
+                                        %s
+                                        %s
+                                    </div>';
+    private $singleCheckboxWrapper = '<div class="form-group row">
+                                                <div class="col-sm-3 offset-sm-3">
+                                                    <div class="custom-control custom-switch">
+                                                        %s
+                                                        %s
+                                                    </div>
+                                                </div>    
+                                            </div>';
+    private $inlineSingleCheckboxWrapper = '<div class="custom-control custom-checkbox">
                                         %s
                                         %s
                                     </div>';
@@ -123,7 +137,7 @@ class FormElement extends Helper\FormElement
 
         if (isset($this->typeMap[$type])) {
             //Produce the label
-            $label = $this->parseLabel($element);
+            $label = $this->findLabel($element);
             $renderedElement = $this->renderHelper($this->typeMap[$type], $element);
             $description = $this->parseDescription($element);
             $error = $this->hasFormElementError($element) ? $this->parseFormElementError($element) : null;
@@ -149,11 +163,23 @@ class FormElement extends Helper\FormElement
                         $wrapper = $this->inlineCheckboxWrapper;
                     }
                     break;
+                case 'checkbox':
+                    $wrapper = $this->singleCheckboxWrapper;
+
+                    if ($this->inline) {
+                        $wrapper = $this->inlineSingleCheckboxWrapper;
+                    }
+
+                    $label = '<label class="custom-control-label" for="' . \md5($element->getName()) . '">' . $label
+                        . '</label>';
+                    return \sprintf($wrapper, $renderedElement, $label, $error, $description);
+
+                    break;
                 case 'submit':
                 case 'button':
                     return $renderedElement;
                 default:
-                    $label = $this->parseLabel($element, false);
+                    $label = $this->parseLabel($element);
             }
 
             return \sprintf($wrapper, $label, $renderedElement, $error, $description);
@@ -162,33 +188,18 @@ class FormElement extends Helper\FormElement
         return null;
     }
 
-    private function parseLabel(ElementInterface $element, bool $inline = true): string
+    private function findLabel(ElementInterface $element): ?string
     {
         $label = $element->getLabel();
         if (null !== $element->getAttribute('label')) {
             $label = $element->getAttribute('label');
         }
 
-        $openTagAttributes = ['for' => $element->getName()];
-
-        if (!$inline) {
-            $openTagAttributes['class'] = 'col-sm-3 col-form-label';
-        }
-
-        $openTag = $this->formLabel->openTag($openTagAttributes);
-
         if (null !== ($translator = $this->formLabel->getTranslator())) {
             $label = $translator->translate($label);
         }
 
-        if (!$element instanceof LabelAwareInterface || !$element->getLabelOption('disable_html_escape')) {
-            $label = $this->escapeHtml->__invoke($label);
-        }
-
-        return $openTag . $label . $this->formLabel->closeTag();
-
-
-        return \sprintf('%s%s', $this->formLabel->openTag(), $this->formLabel->closeTag());
+        return $label;
     }
 
     private function parseDescription(ElementInterface $element): string
@@ -208,5 +219,28 @@ class FormElement extends Helper\FormElement
         $this->formElementErrors->setMessageCloseString('</span></div>');
 
         return $this->formElementErrors->__invoke($element);
+    }
+
+    private function parseLabel(ElementInterface $element): string
+    {
+        $label = $this->findLabel($element);
+
+        $openTagAttributes = ['for' => $element->getName()];
+
+        if (!$this->inline) {
+            $openTagAttributes['class'] = 'col-sm-3 col-form-label';
+        }
+
+        $openTag = $this->formLabel->openTag($openTagAttributes);
+
+
+        if (!$element instanceof LabelAwareInterface || !$element->getLabelOption('disable_html_escape')) {
+            $label = $this->escapeHtml->__invoke($label);
+        }
+
+        return $openTag . $label . $this->formLabel->closeTag();
+
+
+        return \sprintf('%s%s', $this->formLabel->openTag(), $this->formLabel->closeTag());
     }
 }

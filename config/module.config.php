@@ -26,6 +26,7 @@ return [
             'zf3b4forminput'         => View\Helper\FormInput::class,
             'zf3b4formfile'          => View\Helper\FormFile::class,
             'zf3b4formradio'         => View\Helper\FormRadio::class,
+            'zf3b4formcheckbox'      => View\Helper\FormCheckbox::class,
             'zf3b4formlabel'         => View\Helper\FormLabel::class,
             'zf3b4formtextarea'      => View\Helper\FormTextarea::class,
             'zf3b4formselect'        => View\Helper\FormSelect::class,

@@ -26,13 +26,12 @@ class FilterBarElement extends FormElement
         return $this;
     }
 
-
     private function renderFilterBar(SearchResult $element)
     {
 
         $wrapper = '
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Filter</a>
+        <a class="navbar-brand">Filter</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#filterBar"
                     aria-controls="filterBar" aria-expanded="false" aria-label="Toggle Filter">
                 <span class="navbar-toggler-icon"></span>
@@ -48,6 +47,25 @@ class FilterBarElement extends FormElement
                 </div>
             </div>
         </nav>
+        
+        <script type="text/javascript">
+            $(\'.dropdown-menu-filter-bar\').on(\'click\', function(e) {
+                e.stopPropagation();
+            });
+        
+            $(function () {
+                $(\'#searchButton\').on(\'click\', function () {
+                    $(\'#search\').submit();
+                });
+                $(\'#resetButton\').on(\'click\', function () {
+                    $(\'input[type="checkbox"]\').each(function () {
+                        this.removeAttribute(\'checked\');
+                    });
+                    $(\'input[name="query"]\').val(\'\');
+                    $(\'#search\').submit();
+                });
+            });
+        </script>
         
         <style type="text/css">
             .dropdown-item > label > input {
@@ -75,7 +93,15 @@ class FilterBarElement extends FormElement
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             %s
                         </a>                        
-                        <div class="dropdown-menu inactive" area-labelledby="searchDropdown-%d">%s</div>                        
+                        <div class="dropdown-menu inactive dropdown-menu-filter-bar" area-labelledby="searchDropdown-%d">
+                            %s
+                             <div class="dropdown-divider"></div>
+                             <div class="dropdown-item">
+                             <input type="submit" name="search" class="btn btn-outline-success ml-2 my-2 my-sm-0" value="Search">
+                             </div>
+                            
+                        </div>   
+                                             
                     </li>';
 
 
@@ -98,8 +124,9 @@ class FilterBarElement extends FormElement
                 //Get the helper
                 /** @var FormMultiCheckbox $formMultiCheckbox */
                 $formMultiCheckbox = $this->getView()->plugin('zf3b4formmulticheckbox');
-                $formMultiCheckbox->setTemplate('<div class="dropdown-item"><div class="form-check">%s%s%s%s</div></div>');
-
+                $formMultiCheckbox->setTemplate(
+                    '<div class="dropdown-item"><div class="form-check">%s%s%s%s</div></div>'
+                );
 
                 return $formMultiCheckbox->render($element);
             case 'text':
