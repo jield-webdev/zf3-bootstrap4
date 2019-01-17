@@ -15,7 +15,9 @@ final class FormTextarea extends Helper\FormTextarea
             $element->setAttribute('class', 'form-control is-invalid');
         }
 
-        $element->setAttribute('id', $element->getName());
+        if (null === $element->getAttribute('id')) {
+            $element->setAttribute('id', $element->getName());
+        }
 
         return parent::render($element);
     }
