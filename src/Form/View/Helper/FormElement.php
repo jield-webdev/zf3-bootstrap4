@@ -225,6 +225,11 @@ class FormElement extends Helper\FormElement
     {
         $label = $this->findLabel($element);
 
+        if (null === $label)
+        {
+            return '';
+        }
+
         $openTagAttributes = ['for' => $element->getName()];
 
         if (!$this->inline) {
