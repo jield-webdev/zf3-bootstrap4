@@ -142,7 +142,7 @@ class Menu extends ZendMenu
 
             $html .= $myIndent
                 . ($depth === 0 ? '    <li' . $liClass . '>' : '')
-                . $myIndent . $this->htmlify($page, $escapeLabels, $depth > 0, null === $maxDepth || $maxDepth > 0)
+                . $myIndent . $this->htmlify($page, $escapeLabels, $depth > 0, $maxDepth !== 0)
                 . PHP_EOL;
 
 
