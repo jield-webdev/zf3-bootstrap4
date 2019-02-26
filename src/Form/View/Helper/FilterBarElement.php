@@ -16,7 +16,7 @@ use Zend\Form\ElementInterface;
  */
 class FilterBarElement extends FormElement
 {
-    public function __invoke(ElementInterface $element = null, $groupWrapper = null, $controlWrapper = null)
+    public function __invoke(ElementInterface $element = null, bool $inline = false)
     {
 
         if ($element) {
@@ -131,6 +131,7 @@ class FilterBarElement extends FormElement
 
                 return $formMultiCheckbox->render($element);
             case 'text':
+            case 'search':
                 return $this->renderHelper('zf3b4forminput', $element);
             case 'button':
                 $element->setAttribute('class', 'btn btn-outline-success ml-2 my-2 my-sm-0');

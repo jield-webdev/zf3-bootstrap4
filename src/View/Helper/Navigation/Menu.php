@@ -122,7 +122,7 @@ class Menu extends ZendMenu
                 $liClasses[] = $liActiveClass;
             }
 
-            if ($page->hasPages() && $maxDepth > 0) {
+            if ($page->hasPages() && $maxDepth !== 0) {
                 $liClasses[] = 'dropdown';
             }
 
@@ -142,7 +142,7 @@ class Menu extends ZendMenu
 
             $html .= $myIndent
                 . ($depth === 0 ? '    <li' . $liClass . '>' : '')
-                . $myIndent . $this->htmlify($page, $escapeLabels, $depth > 0, $maxDepth > 0)
+                . $myIndent . $this->htmlify($page, $escapeLabels, $depth > 0, $maxDepth !== 0)
                 . PHP_EOL;
 
 
@@ -172,9 +172,7 @@ class Menu extends ZendMenu
 
         $class[] = $page->getClass();
 
-
-
-        if ($showDropdown && !$isChild && $page->hasPages(true)) {
+        if (!$isChild && $page->hasPages(true)) {
             $attribs['data-toggle'] = 'dropdown';
             $attribs['aria-haspopup'] = 'true';
             $attribs['aria-expanded'] = 'false';

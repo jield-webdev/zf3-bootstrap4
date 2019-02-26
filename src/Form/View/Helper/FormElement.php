@@ -124,8 +124,6 @@ class FormElement extends Helper\FormElement
             return $renderedType;
         }
 
-//        var_dump($element->getAttribute('type') . ' cannot be found');
-
         $element->setValue($this->translator->translate($element->getValue()));
 
         return parent::render($element);
@@ -221,7 +219,7 @@ class FormElement extends Helper\FormElement
         return $this->formElementErrors->__invoke($element);
     }
 
-    private function parseLabel(ElementInterface $element): string
+    protected function parseLabel(ElementInterface $element): string
     {
         $label = $this->findLabel($element);
 
