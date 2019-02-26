@@ -196,6 +196,9 @@ class Menu extends ZendMenu
             $element = 'a';
             if (!$isChild && $page->hasPages(true)) {
                 $href = '#';
+                if (!$showDropdown) {
+                    $href = $page->getHref();
+                }
             }
             $attribs['href'] = $href;
             $attribs['target'] = $page->getTarget();
