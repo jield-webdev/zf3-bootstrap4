@@ -28,6 +28,11 @@ class FormElement extends Helper\FormElement
             'multi_checkbox' => 'zf3b4formmulticheckbox',
         ];
     /**
+     * @var Translator
+     */
+    protected $translator;
+    protected $inline = false;
+    /**
      * @var Helper\FormLabel
      */
     private $formLabel;
@@ -43,12 +48,6 @@ class FormElement extends Helper\FormElement
      * @var Helper\FormElementErrors
      */
     private $formElementErrors;
-    /**
-     * @var Translator
-     */
-    private $translator;
-    private $inline = false;
-
     private $inlineWrapper = '<div class="form-group">%s%s%s%s</div>';
     private $horizonalWrapper = '<div class="form-group row">%s<div class="col-sm-9">%s%s%s</div></div>';
     private $radioWrapper = '<fieldset class="form-group">
@@ -223,8 +222,7 @@ class FormElement extends Helper\FormElement
     {
         $label = $this->findLabel($element);
 
-        if (null === $label)
-        {
+        if (null === $label) {
             return '';
         }
 

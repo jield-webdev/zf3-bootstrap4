@@ -119,12 +119,20 @@ class FilterBarElement extends FormElement
     private function renderRaw(ElementInterface $element): ?string
     {
         $type = $element->getAttribute('type');
-
         switch ($type) {
             case 'multi_checkbox':
                 //Get the helper
                 /** @var FormMultiCheckbox $formMultiCheckbox */
                 $formMultiCheckbox = $this->getView()->plugin('zf3b4formmulticheckbox');
+                $formMultiCheckbox->setTemplate(
+                    '<div class="dropdown-item"><div class="form-check">%s%s%s%s</div></div>'
+                );
+
+                return $formMultiCheckbox->render($element);
+            case 'radio':
+                //Get the helper
+                /** @var FormMultiCheckbox $formMultiCheckbox */
+                $formMultiCheckbox = $this->getView()->plugin('zf3b4formradio');
                 $formMultiCheckbox->setTemplate(
                     '<div class="dropdown-item"><div class="form-check">%s%s%s%s</div></div>'
                 );
