@@ -16,6 +16,7 @@ class FormElement extends Helper\FormElement
             'text'           => 'zf3b4forminput',
             'email'          => 'zf3b4forminput',
             'number'         => 'zf3b4forminput',
+            'color'          => 'zf3b4forminput',
             'password'       => 'zf3b4forminput',
             'url'            => 'zf3b4forminput',
             'checkbox'       => 'zf3b4formcheckbox',
@@ -241,7 +242,5 @@ class FormElement extends Helper\FormElement
 
         return $openTag . $label . $this->formLabel->closeTag();
 
-
-        return \sprintf('%s%s', $this->formLabel->openTag(), $this->formLabel->closeTag());
     }
 }

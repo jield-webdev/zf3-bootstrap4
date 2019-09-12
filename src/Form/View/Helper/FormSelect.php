@@ -4,17 +4,18 @@ namespace Zf3Bootstrap4\Form\View\Helper;
 
 use Zend\Form\ElementInterface;
 use Zend\Form\View\Helper;
+use function count;
 
 final class FormSelect extends Helper\FormSelect
 {
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         if (null === $element->getAttribute('class')) {
             $element->setAttribute('class', 'form-control');
         }
 
-        if (\count($element->getMessages()) > 0) {
-            $element->setAttribute('class', 'form-control is-invalid');
+        if (count($element->getMessages()) > 0) {
+            $element->setAttribute('class', $element->getAttribute('class') . ' is-invalid');
         }
 
         if (null === $element->getAttribute('id')) {
