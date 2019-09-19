@@ -241,6 +241,5 @@ class FormElement extends Helper\FormElement
         }
 
         return $openTag . $label . $this->formLabel->closeTag();
-
     }
 }

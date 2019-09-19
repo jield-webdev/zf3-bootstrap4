@@ -18,7 +18,6 @@ class FilterBarElement extends FormElement
 {
     public function __invoke(ElementInterface $element = null, bool $inline = false)
     {
-
         if ($element) {
             return $this->renderFilterBar($element);
         }
@@ -28,7 +27,6 @@ class FilterBarElement extends FormElement
 
     private function renderFilterBar(SearchResult $element)
     {
-
         $wrapper = '
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand">Filter</a>

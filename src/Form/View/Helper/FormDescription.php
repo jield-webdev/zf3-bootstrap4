@@ -18,9 +18,11 @@ final class FormDescription extends AbstractHelper
     private $inlineWrapper = '<small class="form-text text-muted">%s</small>';
     private $blockWrapper = '<small class="form-text text-muted">%s</small>';
 
-    public function __invoke(ElementInterface $element = null, string $blockWrapper = null, string $inlineWrapper = null
-    )
-    {
+    public function __invoke(
+        ElementInterface $element = null,
+        string $blockWrapper = null,
+        string $inlineWrapper = null
+    ) {
         if ($element) {
             return $this->render($element, $blockWrapper, $inlineWrapper);
         }

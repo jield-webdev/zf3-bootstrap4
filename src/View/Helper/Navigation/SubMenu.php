@@ -53,7 +53,6 @@ class SubMenu extends ZendMenu
         $addClassToListItem,
         $liActiveClass
     ) {
-
         $html = '<ul class="nav-sub-menu ' . $ulClass . '">';
 
         // find deepest active
@@ -89,7 +88,8 @@ class SubMenu extends ZendMenu
                 $accept = false;
                 if ($foundPage->hasPage($page) ||
                     $foundPage->getParent()->hasPage($page) ||
-                    (!$foundPage->getParent() instanceof Navigation &&
+                    (
+                        !$foundPage->getParent() instanceof Navigation &&
                         $foundPage->getParent()->getParent()->hasPage($page)
                     )
 
