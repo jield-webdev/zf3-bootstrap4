@@ -8,6 +8,8 @@ use Zend\Form\View\Helper;
 use Zend\I18n\Translator\Translator;
 use Zend\View\Helper\EscapeHtml;
 use Zend\View\HelperPluginManager;
+use function md5;
+use function sprintf;
 
 class FormElement extends Helper\FormElement
 {
@@ -49,8 +51,9 @@ class FormElement extends Helper\FormElement
      * @var Helper\FormElementErrors
      */
     private $formElementErrors;
-    private $inlineWrapper = '<div class="form-group">%s%s%s%s</div>';
-    private $horizonalWrapper = '<div class="form-group row">%s<div class="col-sm-9">%s%s%s</div></div>';
+//    private $inlineWrapper = '<div class="form-group">%s%s%s%s</div>';
+    private $inlineWrapper = '%s%s';
+    private $horizontalWrapper = '<div class="form-group row">%s<div class="col-sm-9">%s%s%s</div></div>';
     private $radioWrapper = '<fieldset class="form-group">
                                 <div class="row">
                                     <legend class="col-form-label col-sm-3 pt-0">%s</legend>
@@ -140,12 +143,11 @@ class FormElement extends Helper\FormElement
             $description = $this->parseDescription($element);
             $error = $this->hasFormElementError($element) ? $this->parseFormElementError($element) : null;
 
-            $wrapper = $this->horizonalWrapper;
+            $wrapper = $this->horizontalWrapper;
 
             if ($this->inline) {
                 $wrapper = $this->inlineWrapper;
             }
-
             switch ($type) {
                 case 'radio':
                     $wrapper = $this->radioWrapper;
@@ -168,9 +170,9 @@ class FormElement extends Helper\FormElement
                         $wrapper = $this->inlineSingleCheckboxWrapper;
                     }
 
-                    $label = '<label class="custom-control-label" for="' . \md5($element->getName()) . '">' . $label
+                    $label = '<label class="custom-control-label" for="' . md5($element->getName()) . '">' . $label
                         . '</label>';
-                    return \sprintf($wrapper, $renderedElement, $label, $error, $description);
+                    return sprintf($wrapper, $renderedElement, $label, $error, $description);
 
                     break;
                 case 'submit':
@@ -180,7 +182,7 @@ class FormElement extends Helper\FormElement
                     $label = $this->parseLabel($element);
             }
 
-            return \sprintf($wrapper, $label, $renderedElement, $error, $description);
+            return sprintf($wrapper, $label, $renderedElement, $error, $description);
         }
 
         return null;
