@@ -5,7 +5,7 @@ namespace Zf3Bootstrap4\Form\View\Helper;
 use Zend\Form\ElementInterface;
 use Zend\Form\LabelAwareInterface;
 use Zend\Form\View\Helper;
-use Zend\I18n\Translator\Translator;
+use Zend\I18n\Translator\TranslatorInterface;
 use Zend\View\Helper\EscapeHtml;
 use Zend\View\HelperPluginManager;
 
@@ -44,7 +44,7 @@ class FormElement extends Helper\FormElement
      */
     private $formElementErrors;
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
     private $inline = false;
@@ -94,7 +94,7 @@ class FormElement extends Helper\FormElement
                                         %s
                                     </div>';
 
-    public function __construct(HelperPluginManager $viewHelperManager, Translator $translator)
+    public function __construct(HelperPluginManager $viewHelperManager, TranslatorInterface $translator)
     {
         $this->formLabel = $viewHelperManager->get('formlabel');
         $this->escapeHtml = $viewHelperManager->get('escapehtml');
