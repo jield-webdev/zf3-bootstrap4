@@ -85,7 +85,7 @@ class FormElement extends Helper\FormElement
                                         %s
                                     </div>';
     private $singleCheckboxWrapper = '<div class="form-group row">
-                                                <div class="col-sm-3 offset-sm-3">
+                                                <div class="col-sm-9 offset-sm-3">
                                                     <div class="custom-control custom-switch">
                                                         %s
                                                         %s
