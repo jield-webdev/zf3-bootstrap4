@@ -18,7 +18,6 @@ class FilterBarElement extends FormElement
 {
     public function __invoke(ElementInterface $element = null, bool $inline = false)
     {
-
         if ($element) {
             return $this->renderFilterBar($element);
         }
@@ -28,7 +27,6 @@ class FilterBarElement extends FormElement
 
     private function renderFilterBar(SearchResult $element)
     {
-
         $wrapper = '
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand">Filter</a>
@@ -143,13 +141,15 @@ class FilterBarElement extends FormElement
                 return $this->renderHelper('zf3b4forminput', $element);
             case 'button':
                 $element->setAttribute(
-                    'class', 'ml-2 my-2 my-sm-0 ' . $element->getAttribute('class')
+                    'class',
+                    'ml-2 my-2 my-sm-0 ' . $element->getAttribute('class')
                 );
                 $element->setAttribute('id', 'searchButton');
                 if ($element->getName() === 'reset') {
                     $element->setAttribute('id', 'resetButton');
                     $element->setAttribute(
-                        'class', 'ml-2 my-2 my-sm-0 ' . $element->getAttribute('class')
+                        'class',
+                        'ml-2 my-2 my-sm-0 ' . $element->getAttribute('class')
                     );
                 }
                 return $this->renderHelper('formbutton', $element);

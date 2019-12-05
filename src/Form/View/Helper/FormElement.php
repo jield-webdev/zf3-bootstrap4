@@ -5,7 +5,7 @@ namespace Zf3Bootstrap4\Form\View\Helper;
 use Zend\Form\ElementInterface;
 use Zend\Form\LabelAwareInterface;
 use Zend\Form\View\Helper;
-use Zend\I18n\Translator\Translator;
+use Zend\I18n\Translator\TranslatorInterface;
 use Zend\View\Helper\EscapeHtml;
 use Zend\View\HelperPluginManager;
 use function md5;
@@ -31,11 +31,6 @@ class FormElement extends Helper\FormElement
             'multi_checkbox' => 'zf3b4formmulticheckbox',
         ];
     /**
-     * @var Translator
-     */
-    protected $translator;
-    protected $inline = false;
-    /**
      * @var Helper\FormLabel
      */
     private $formLabel;
@@ -51,8 +46,13 @@ class FormElement extends Helper\FormElement
      * @var Helper\FormElementErrors
      */
     private $formElementErrors;
-//    private $inlineWrapper = '<div class="form-group">%s%s%s%s</div>';
-    private $inlineWrapper = '%s%s';
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+    private $inline = false;
+
+    private $inlineWrapper = '<div class="form-group">%s%s%s%s</div>';
     private $horizontalWrapper = '<div class="form-group row">%s<div class="col-sm-9">%s%s%s</div></div>';
     private $radioWrapper = '<fieldset class="form-group">
                                 <div class="row">
@@ -97,7 +97,7 @@ class FormElement extends Helper\FormElement
                                         %s
                                     </div>';
 
-    public function __construct(HelperPluginManager $viewHelperManager, Translator $translator)
+    public function __construct(HelperPluginManager $viewHelperManager, TranslatorInterface $translator)
     {
         $this->formLabel = $viewHelperManager->get('formlabel');
         $this->escapeHtml = $viewHelperManager->get('escapehtml');
