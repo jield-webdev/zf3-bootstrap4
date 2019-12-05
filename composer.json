@@ -21,6 +21,7 @@
       "homepage": "http://blog.digitalstruct.com/"
     }
   ],
+  "minimum-stability": "dev",
   "require": {
     "php": "^7.2"
   },
