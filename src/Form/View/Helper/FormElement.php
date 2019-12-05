@@ -50,7 +50,7 @@ class FormElement extends Helper\FormElement
      * @var TranslatorInterface
      */
     private $translator;
-    private $inline = false;
+    protected $inline = false;
 
     private $inlineWrapper = '<div class="form-group">%s%s%s%s</div>';
     private $horizontalWrapper = '<div class="form-group row">%s<div class="col-sm-9">%s%s%s</div></div>';
