@@ -3,8 +3,10 @@ name: Test suite
 on: [push]
 
 jobs:
+  strategy:
+    matrix:
+      php-versions: [ '7.2', '7.3', '7.4']
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -13,7 +15,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v1
         with:
-          php-version: '7.4'
+          php-version: ${{ matrix.php-versions }}
           coverage: xdebug #optional, setup coverage driver
 
       - name: Check PHP Version
