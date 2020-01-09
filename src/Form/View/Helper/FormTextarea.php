@@ -2,8 +2,8 @@
 
 namespace Zf3Bootstrap4\Form\View\Helper;
 
-use Zend\Form\ElementInterface;
-use Zend\Form\View\Helper;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\View\Helper;
 
 final class FormTextarea extends Helper\FormTextarea
 {

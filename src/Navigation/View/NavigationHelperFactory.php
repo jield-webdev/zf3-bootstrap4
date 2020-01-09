@@ -6,7 +6,7 @@
 namespace Zf3Bootstrap4\Navigation\View;
 
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Zf3Bootstrap4\View\Helper\Navigation;
 
 /**

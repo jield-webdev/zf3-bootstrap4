@@ -6,15 +6,15 @@
 namespace Zf3Bootstrap4\View\Helper\Navigation;
 
 use RecursiveIteratorIterator;
-use Zend\Navigation\AbstractContainer;
-use Zend\Navigation\Page\AbstractPage;
-use Zend\Navigation\Page\Mvc;
-use Zend\View\Helper\Navigation\Menu as ZendMenu;
+use Laminas\Navigation\AbstractContainer;
+use Laminas\Navigation\Page\AbstractPage;
+use Laminas\Navigation\Page\Mvc;
+use Laminas\View\Helper\Navigation\Menu as LaminasMenu;
 
 /**
  * Helper for rendering menus from navigation containers
  */
-class Menu extends ZendMenu
+class Menu extends LaminasMenu
 {
     /**
      * CSS class to use for the ul element
@@ -39,7 +39,7 @@ class Menu extends ZendMenu
         // find deepest active
         $found = $this->findActive($container, $minDepth, $maxDepth);
 
-        /* @var $escaper \Zend\View\Helper\EscapeHtmlAttr */
+        /* @var $escaper \Laminas\View\Helper\EscapeHtmlAttr */
         $escaper = $this->view->plugin('escapeHtmlAttr');
 
         if ($found) {
@@ -209,7 +209,7 @@ class Menu extends ZendMenu
         $label = $this->translate($page->getLabel(), $page->getTextDomain());
 
         if ($escapeLabel === true) {
-            /** @var \Zend\View\Helper\EscapeHtml $escaper */
+            /** @var \Laminas\View\Helper\EscapeHtml $escaper */
             $escaper = $this->view->plugin('escapeHtml');
             $html .= $escaper($label);
         } else {

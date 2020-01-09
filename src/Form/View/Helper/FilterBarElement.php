@@ -6,8 +6,8 @@
 namespace Zf3Bootstrap4\Form\View\Helper;
 
 use Search\Form\SearchResult;
-use Zend\Form\Element\MultiCheckbox;
-use Zend\Form\ElementInterface;
+use Laminas\Form\Element\MultiCheckbox;
+use Laminas\Form\ElementInterface;
 
 /**
  * Class FilterBarElement

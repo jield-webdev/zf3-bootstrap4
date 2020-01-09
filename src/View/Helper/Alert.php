@@ -5,7 +5,7 @@
 
 namespace Zf3Bootstrap4\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Class Alert
