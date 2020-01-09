@@ -33,6 +33,12 @@
       "Zf3Bootstrap4\\": "src"
     }
   },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.1-dev",
+      "dev-develop": "2.1-dev"
+    }
+  },
   "scripts": {
     "check": [
       "@php-lint",
