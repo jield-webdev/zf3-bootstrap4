@@ -26,7 +26,7 @@
     "php": "^7.2"
   },
   "require-dev": {
-    "iteaoffice/testing": "^1.2"
+    "iteaoffice/testing": "^2.1"
   },
   "autoload": {
     "psr-4": {
