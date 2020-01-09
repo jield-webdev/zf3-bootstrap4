@@ -2,12 +2,12 @@
 
 namespace Zf3Bootstrap4\Form\View\Helper;
 
-use Zend\Form\ElementInterface;
-use Zend\Form\LabelAwareInterface;
-use Zend\Form\View\Helper;
-use Zend\I18n\Translator\TranslatorInterface;
-use Zend\View\Helper\EscapeHtml;
-use Zend\View\HelperPluginManager;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\LabelAwareInterface;
+use Laminas\Form\View\Helper;
+use Laminas\I18n\Translator\TranslatorInterface;
+use Laminas\View\Helper\EscapeHtml;
+use Laminas\View\HelperPluginManager;
 use function md5;
 use function sprintf;
 
@@ -49,7 +49,7 @@ class FormElement extends Helper\FormElement
     /**
      * @var TranslatorInterface
      */
-    protected $translator;
+    private $translator;
     protected $inline = false;
 
     private $inlineWrapper = '<div class="form-group">%s%s%s%s</div>';

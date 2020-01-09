@@ -1,6 +1,6 @@
 <?php
 
-use Zend\ServiceManager\AbstractFactory\ConfigAbstractFactory;
+use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 use Zf3Bootstrap4\Form\View;
 use Zf3Bootstrap4\Navigation;
 use Zf3Bootstrap4\View\Helper;
@@ -37,11 +37,11 @@ return [
     ConfigAbstractFactory::class => [
         View\Helper\FormElement::class      => [
             'ViewHelperManager',
-            \Zend\I18n\Translator\TranslatorInterface::class
+            \Laminas\I18n\Translator\TranslatorInterface::class
         ],
         View\Helper\FilterBarElement::class => [
             'ViewHelperManager',
-            \Zend\I18n\Translator\TranslatorInterface::class
+            \Laminas\I18n\Translator\TranslatorInterface::class
         ]
     ]
 ];

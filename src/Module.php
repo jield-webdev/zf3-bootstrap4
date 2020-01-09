@@ -5,7 +5,7 @@
 
 namespace Zf3Bootstrap4;
 
-use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Laminas\ModuleManager\Feature\ConfigProviderInterface;
 
 /**
  * Class Module

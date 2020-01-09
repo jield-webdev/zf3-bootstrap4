@@ -5,13 +5,13 @@
 
 namespace Zf3Bootstrap4\View\Helper;
 
-use Zend\View\Helper\Navigation as ZendNavigation;
+use Laminas\View\Helper\Navigation as LaminasNavigation;
 use Zf3Bootstrap4\View\Helper;
 
 /**
  * Navigation
  */
-class Navigation extends ZendNavigation
+class Navigation extends LaminasNavigation
 {
     protected $defaultProxy = 'zf3b4menu';
 
@@ -23,7 +23,7 @@ class Navigation extends ZendNavigation
             'zf3b4submenu' => Helper\Navigation\SubMenu::class,
         ];
 
-    public function getPluginManager(): ZendNavigation\PluginManager
+    public function getPluginManager(): LaminasNavigation\PluginManager
     {
         $pm = parent::getPluginManager();
         foreach ($this->defaultPluginManagerHelpers as $name => $invokableClass) {

@@ -2,7 +2,7 @@
 
 namespace Zf3Bootstrap4\Form\View\Helper;
 
-use Zend\Form\ElementInterface;
+use Laminas\Form\ElementInterface;
 
 final class FormRadio extends FormMultiCheckbox
 {

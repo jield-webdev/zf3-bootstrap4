@@ -1,18 +1,18 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Laminas Framework (http://framework.laminas.com/)
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @link      http://github.com/laminasframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Laminas Technologies USA Inc. (http://www.laminas.com)
+ * @license   http://framework.laminas.com/license/new-bsd New BSD License
  */
 
 namespace Zf3Bootstrap4\Form\View\Helper;
 
-use Zend\Form\Element\MultiCheckbox as MultiCheckboxElement;
-use Zend\Form\ElementInterface;
-use Zend\Form\LabelAwareInterface;
-use Zend\Form\View\Helper;
+use Laminas\Form\Element\MultiCheckbox as MultiCheckboxElement;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\LabelAwareInterface;
+use Laminas\Form\View\Helper;
 
 class FormMultiCheckbox extends Helper\FormMultiCheckbox
 {

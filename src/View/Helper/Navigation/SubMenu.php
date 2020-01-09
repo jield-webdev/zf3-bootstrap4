@@ -7,17 +7,17 @@ namespace Zf3Bootstrap4\View\Helper\Navigation;
 
 use RecursiveIteratorIterator;
 
-use Zend\View\Helper\Navigation\Menu as ZendMenu;
-use Zend\Navigation\Navigation;
-use Zend\Navigation\AbstractContainer;
-use Zend\Navigation\Page\AbstractPage;
-use Zend\View;
-use Zend\View\Exception;
+use Laminas\View\Helper\Navigation\Menu as LaminasMenu;
+use Laminas\Navigation\Navigation;
+use Laminas\Navigation\AbstractContainer;
+use Laminas\Navigation\Page\AbstractPage;
+use Laminas\View;
+use Laminas\View\Exception;
 
 /**
  * Helper for rendering menus from navigation containers
  */
-class SubMenu extends ZendMenu
+class SubMenu extends LaminasMenu
 {
     /**
      * CSS class to use for the ul element
@@ -193,7 +193,7 @@ class SubMenu extends ZendMenu
         $label = $this->translate($page->getLabel(), $page->getTextDomain());
 
         if ($escapeLabel === true) {
-            /** @var \Zend\View\Helper\EscapeHtml $escaper */
+            /** @var \Laminas\View\Helper\EscapeHtml $escaper */
             $escaper = $this->view->plugin('escapeHtml');
             $html .= $escaper($label);
         } else {

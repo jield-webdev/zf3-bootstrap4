@@ -2,9 +2,9 @@
 
 namespace Zf3Bootstrap4\Form\View\Helper;
 
-use Zend\Form\ElementInterface;
+use Laminas\Form\ElementInterface;
 
-final class FormCheckbox extends \Zend\Form\View\Helper\FormCheckbox
+final class FormCheckbox extends \Laminas\Form\View\Helper\FormCheckbox
 {
     public function render(ElementInterface $element)
     {
