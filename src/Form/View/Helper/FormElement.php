@@ -8,6 +8,7 @@ use Laminas\Form\View\Helper;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\View\Helper\EscapeHtml;
 use Laminas\View\HelperPluginManager;
+
 use function md5;
 use function sprintf;
 
@@ -31,6 +32,11 @@ class FormElement extends Helper\FormElement
             'multi_checkbox' => 'zf3b4formmulticheckbox',
         ];
     /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+    protected $inline = false;
+    /**
      * @var Helper\FormLabel
      */
     private $formLabel;
@@ -46,15 +52,9 @@ class FormElement extends Helper\FormElement
      * @var Helper\FormElementErrors
      */
     private $formElementErrors;
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-    protected $inline = false;
-
-    private $inlineWrapper = '<div class="form-group">%s%s%s%s</div>';
-    private $horizontalWrapper = '<div class="form-group row">%s<div class="col-sm-9">%s%s%s</div></div>';
-    private $radioWrapper = '<fieldset class="form-group">
+    private $inlineWrapper               = '<div class="form-group">%s%s%s%s</div>';
+    private $horizontalWrapper           = '<div class="form-group row">%s<div class="col-sm-9">%s%s%s</div></div>';
+    private $radioWrapper                = '<fieldset class="form-group">
                                 <div class="row">
                                     <legend class="col-form-label col-sm-3 pt-0">%s</legend>
                                     <div class="col-sm-9">
@@ -64,13 +64,13 @@ class FormElement extends Helper\FormElement
                                     </div>
                                 </div>
                              </fieldset>';
-    private $inlineRadioWrapper = '<div class="form-group">
+    private $inlineRadioWrapper          = '<div class="form-group">
                                     <strong class="col-form-label">%s</strong>
                                         %s
                                         %s
                                         %s                                
                              </div>';
-    private $checkboxWrapper = '<div class="form-group row">
+    private $checkboxWrapper             = '<div class="form-group row">
                                     <div class="col-form-label col-sm-3 pt-0">%s</div>
                                     <div class="col-sm-9">
                                         %s
@@ -78,13 +78,13 @@ class FormElement extends Helper\FormElement
                                         %s
                                     </div>
                              </div>';
-    private $inlineCheckboxWrapper = '<div class="form-group">
+    private $inlineCheckboxWrapper       = '<div class="form-group">
                                     <strong class="col-form-label">%s</strong>
                                         %s
                                         %s
                                         %s
                                     </div>';
-    private $singleCheckboxWrapper = '<div class="form-group row">
+    private $singleCheckboxWrapper       = '<div class="form-group row">
                                                 <div class="col-sm-9 offset-sm-3">
                                                     <div class="custom-control custom-switch">
                                                         %s
@@ -99,14 +99,13 @@ class FormElement extends Helper\FormElement
 
     public function __construct(HelperPluginManager $viewHelperManager, TranslatorInterface $translator)
     {
-        $this->formLabel = $viewHelperManager->get('formlabel');
-        $this->escapeHtml = $viewHelperManager->get('escapehtml');
-        $this->formDescription = $viewHelperManager->get('zf3b4formdescription');
+        $this->formLabel         = $viewHelperManager->get('formlabel');
+        $this->escapeHtml        = $viewHelperManager->get('escapehtml');
+        $this->formDescription   = $viewHelperManager->get('zf3b4formdescription');
         $this->formElementErrors = $viewHelperManager->get('formelementerrors');
 
         $this->translator = $translator;
     }
-
 
     public function __invoke(ElementInterface $element = null, bool $inline = false)
     {
@@ -138,10 +137,10 @@ class FormElement extends Helper\FormElement
 
         if (isset($this->typeMap[$type])) {
             //Produce the label
-            $label = $this->findLabel($element);
+            $label           = $this->findLabel($element);
             $renderedElement = $this->renderHelper($this->typeMap[$type], $element);
-            $description = $this->parseDescription($element);
-            $error = $this->hasFormElementError($element) ? $this->parseFormElementError($element) : null;
+            $description     = $this->parseDescription($element);
+            $error           = $this->hasFormElementError($element) ? $this->parseFormElementError($element) : null;
 
             $wrapper = $this->horizontalWrapper;
 
