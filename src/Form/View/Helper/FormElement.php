@@ -109,9 +109,10 @@ class FormElement extends Helper\FormElement
         $this->translator = $translator;
     }
 
-    public function __invoke(ElementInterface $element = null, bool $inline = false)
+    public function __invoke(ElementInterface $element = null, bool $inline = false, bool $formElementOnly = false)
     {
-        $this->inline = $inline;
+        $this->inline          = $inline;
+        $this->formElementOnly = $formElementOnly;
 
         if ($element) {
             return $this->render($element);
@@ -149,6 +150,7 @@ class FormElement extends Helper\FormElement
             if ($this->inline) {
                 $wrapper = $this->inlineWrapper;
             }
+
             switch ($type) {
                 case 'radio':
                     $wrapper = $this->radioWrapper;
