@@ -35,7 +35,8 @@ class FormElement extends Helper\FormElement
      * @var TranslatorInterface
      */
     protected $translator;
-    protected $inline = false;
+    protected $inline          = false;
+    protected $formElementOnly = false;
     /**
      * @var Helper\FormLabel
      */
@@ -53,6 +54,7 @@ class FormElement extends Helper\FormElement
      */
     private $formElementErrors;
     private $inlineWrapper               = '<div class="form-group">%s%s%s%s</div>';
+    private $formElementOnlyWrapper      = '%s%s';
     private $horizontalWrapper           = '<div class="form-group row">%s<div class="col-sm-9">%s%s%s</div></div>';
     private $radioWrapper                = '<fieldset class="form-group">
                                 <div class="row">
@@ -179,6 +181,10 @@ class FormElement extends Helper\FormElement
                     return $renderedElement;
                 default:
                     $label = $this->parseLabel($element);
+            }
+
+            if ($this->formElementOnly) {
+                return sprintf($this->formElementOnlyWrapper, $renderedElement, $error);
             }
 
             return sprintf($wrapper, $label, $renderedElement, $error, $description);
