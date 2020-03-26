@@ -5,9 +5,9 @@
 
 namespace Zf3Bootstrap4\Form\View\Helper;
 
-use Search\Form\SearchResult;
 use Laminas\Form\Element\MultiCheckbox;
 use Laminas\Form\ElementInterface;
+use Search\Form\SearchResult;
 
 /**
  * Class FilterBarElement
@@ -16,8 +16,11 @@ use Laminas\Form\ElementInterface;
  */
 class FilterBarElement extends FormElement
 {
-    public function __invoke(ElementInterface $element = null, bool $inline = false)
+    public function __invoke(ElementInterface $element = null, bool $inline = false, bool $formElementOnly = false)
     {
+        $this->inline          = $inline;
+        $this->formElementOnly = $formElementOnly;
+
         if ($element) {
             return $this->renderFilterBar($element);
         }
