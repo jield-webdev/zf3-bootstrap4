@@ -126,7 +126,7 @@ class FilterBarElement extends FormElement
                 /** @var FormMultiCheckbox $formMultiCheckbox */
                 $formMultiCheckbox = $this->getView()->plugin('zf3b4formmulticheckbox');
                 $formMultiCheckbox->setTemplate(
-                    '<div class="dropdown-item"><div class="form-check">%s%s%s%s</div></div>'
+                    '<div class="dropdown-item"><div class="form-check %s">%s%s%s%s</div></div>'
                 );
 
                 return $formMultiCheckbox->render($element);
@@ -135,7 +135,7 @@ class FilterBarElement extends FormElement
                 /** @var FormMultiCheckbox $formMultiCheckbox */
                 $formMultiCheckbox = $this->getView()->plugin('zf3b4formradio');
                 $formMultiCheckbox->setTemplate(
-                    '<div class="dropdown-item"><div class="form-check">%s%s%s%s</div></div>'
+                    '<div class="dropdown-item"><div class="form-check %s">%s%s%s%s</div></div>'
                 );
 
                 return $formMultiCheckbox->render($element);
