@@ -91,7 +91,10 @@ class FormElement extends Helper\FormElement
                                                     <div class="custom-control custom-switch">
                                                         %s
                                                         %s
+                                                        %s
+                                                        %s
                                                     </div>
+                                                    
                                                 </div>    
                                             </div>';
     private $inlineSingleCheckboxWrapper = '<div class="custom-control custom-checkbox">

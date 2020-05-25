@@ -46,6 +46,7 @@ final class FormDescription extends AbstractHelper
 
             $html .= \sprintf($inlineWrapper, $inline);
         }
+
         if ($block = $element->getOption('help-block')) {
             if (null !== ($translator = $this->getTranslator())) {
                 $block = $translator->translate(
