@@ -92,7 +92,7 @@ class FormElement extends Helper\FormElement
                                                         %s
                                                         %s
                                                         %s
-                                                        %s
+                                                        %s                                                       
                                                     </div>
                                                     
                                                 </div>    
