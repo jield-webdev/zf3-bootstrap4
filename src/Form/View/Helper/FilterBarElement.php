@@ -63,6 +63,9 @@ class FilterBarElement extends FormElement
                     $(\'input[type="checkbox"]\').each(function () {
                         this.removeAttribute(\'checked\');
                     });
+                    $(\'input[type="radio"]\').each(function () {
+                        this.removeAttribute(\'checked\');
+                    });
                     $(\'input[name="query"]\').val(\'\');
                     $(\'#search\').submit();
                 });
