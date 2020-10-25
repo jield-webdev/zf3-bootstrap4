@@ -28,7 +28,7 @@
     "laminas/laminas-navigation": "2.9.*",
     "laminas/laminas-form": "2.14.*",
     "laminas/laminas-view": "2.11.*",
-    "laminas/laminas-i18n": "2.10.*"
+    "laminas/laminas-i18n": "2.10.* || 2.10.*"
   },
   "require-dev": {
     "iteaoffice/testing": "^2.1"
