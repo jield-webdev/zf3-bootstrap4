@@ -16,7 +16,7 @@ use Laminas\Form\View\Helper;
 
 class FormMultiCheckbox extends Helper\FormMultiCheckbox
 {
-    private $template = '<div class="form-check">%s%s%s%s</div>';
+    private $template = '<div class="form-check %s">%s%s%s%s</div>';
 
     public function render(ElementInterface $element)
     {
@@ -24,10 +24,10 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
 
         $options = $element->getValueOptions();
 
-        $attributes = $element->getAttributes();
+        $attributes         = $element->getAttributes();
         $attributes['name'] = $name;
         $attributes['type'] = $this->getInputType();
-        $selectedOptions = (array)$element->getValue();
+        $selectedOptions    = (array)$element->getValue();
 
         $rendered = $this->renderOptions($element, $options, $selectedOptions, $attributes);
 
@@ -49,12 +49,12 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
         array $selectedOptions,
         array $attributes
     ) {
-        $escapeHtmlHelper = $this->getEscapeHtmlHelper();
-        $labelHelper = $this->getLabelHelper();
-        $labelClose = $labelHelper->closeTag();
-        $labelPosition = $this->getLabelPosition();
+        $escapeHtmlHelper      = $this->getEscapeHtmlHelper();
+        $labelHelper           = $this->getLabelHelper();
+        $labelClose            = $labelHelper->closeTag();
+        $labelPosition         = $this->getLabelPosition();
         $globalLabelAttributes = [];
-        $closingBracket = $this->getInlineClosingBracket();
+        $closingBracket        = $this->getInlineClosingBracket();
 
         if ($element instanceof LabelAwareInterface) {
             $globalLabelAttributes = $element->getLabelAttributes();
@@ -65,7 +65,7 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
         }
 
         $combinedMarkup = [];
-        $count = 0;
+        $count          = 0;
 
         foreach ($options as $key => $optionSpec) {
             $count++;
@@ -73,14 +73,14 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
                 unset($attributes['id']);
             }
 
-            $value = '';
-            $label = '';
+            $value           = '';
+            $label           = '';
             $inputAttributes = $attributes;
             $labelAttributes = $globalLabelAttributes;
-            $selected = (isset($inputAttributes['selected'])
+            $selected        = (isset($inputAttributes['selected'])
                 && $inputAttributes['type'] != 'radio'
                 && $inputAttributes['selected']);
-            $disabled = (isset($inputAttributes['disabled']) && $inputAttributes['disabled']);
+            $disabled        = (isset($inputAttributes['disabled']) && $inputAttributes['disabled']);
 
             if (\is_scalar($optionSpec)) {
                 $optionSpec = [
@@ -112,7 +112,7 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
                 $selected = true;
             }
 
-            $elementId = \md5($element->getName() . $label);
+            $elementId                = \md5($element->getName() . $label);
             $inputAttributes['class'] = 'form-check-input';
 
             if (\count($element->getMessages()) > 0) {
@@ -121,8 +121,8 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
 
             $inputAttributes['id'] = $elementId;
 
-            $inputAttributes['value'] = $value;
-            $inputAttributes['checked'] = $selected;
+            $inputAttributes['value']    = $value;
+            $inputAttributes['checked']  = $selected;
             $inputAttributes['disabled'] = $disabled;
 
             $input = sprintf(
@@ -142,18 +142,23 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
                 $label = $escapeHtmlHelper($label);
             }
 
-            $labelAttributes['for'] = $elementId;
+            $labelAttributes['for']   = $elementId;
             $labelAttributes['class'] = 'form-check-label';
 
             $labelOpen = $labelHelper->openTag($labelAttributes);
 
+            $inlineClass = '';
+            if ($element->getOption('inline')) {
+                $inlineClass = 'form-check-inline';
+            }
+
             switch ($labelPosition) {
                 case self::LABEL_PREPEND:
-                    $markup = sprintf($this->template, $label, $labelOpen, $input, $labelClose);
+                    $markup = sprintf($this->template, $inlineClass, $label, $labelOpen, $input, $labelClose);
                     break;
                 case self::LABEL_APPEND:
                 default:
-                    $markup = sprintf($this->template, $input, $labelOpen, $label, $labelClose);
+                    $markup = sprintf($this->template, $inlineClass, $input, $labelOpen, $label, $labelClose);
                     break;
             }
 

@@ -5,9 +5,9 @@
 
 namespace Zf3Bootstrap4\Form\View\Helper;
 
-use Search\Form\SearchResult;
 use Laminas\Form\Element\MultiCheckbox;
 use Laminas\Form\ElementInterface;
+use Search\Form\SearchResult;
 
 /**
  * Class FilterBarElement
@@ -16,8 +16,11 @@ use Laminas\Form\ElementInterface;
  */
 class FilterBarElement extends FormElement
 {
-    public function __invoke(ElementInterface $element = null, bool $inline = false)
+    public function __invoke(ElementInterface $element = null, bool $inline = false, bool $formElementOnly = false)
     {
+        $this->inline          = $inline;
+        $this->formElementOnly = $formElementOnly;
+
         if ($element) {
             return $this->renderFilterBar($element);
         }
@@ -58,6 +61,9 @@ class FilterBarElement extends FormElement
                 });
                 $(\'#resetButton\').on(\'click\', function () {
                     $(\'input[type="checkbox"]\').each(function () {
+                        this.removeAttribute(\'checked\');
+                    });
+                    $(\'input[type="radio"]\').each(function () {
                         this.removeAttribute(\'checked\');
                     });
                     $(\'input[name="query"]\').val(\'\');
@@ -123,7 +129,7 @@ class FilterBarElement extends FormElement
                 /** @var FormMultiCheckbox $formMultiCheckbox */
                 $formMultiCheckbox = $this->getView()->plugin('zf3b4formmulticheckbox');
                 $formMultiCheckbox->setTemplate(
-                    '<div class="dropdown-item"><div class="form-check">%s%s%s%s</div></div>'
+                    '<div class="dropdown-item"><div class="form-check %s">%s%s%s%s</div></div>'
                 );
 
                 return $formMultiCheckbox->render($element);
@@ -132,7 +138,7 @@ class FilterBarElement extends FormElement
                 /** @var FormMultiCheckbox $formMultiCheckbox */
                 $formMultiCheckbox = $this->getView()->plugin('zf3b4formradio');
                 $formMultiCheckbox->setTemplate(
-                    '<div class="dropdown-item"><div class="form-check">%s%s%s%s</div></div>'
+                    '<div class="dropdown-item"><div class="form-check %s">%s%s%s%s</div></div>'
                 );
 
                 return $formMultiCheckbox->render($element);
