@@ -26,7 +26,7 @@
     "php": "^7.2",
     "laminas/laminas-servicemanager": "3.3.* || 3.4.* || 3.5.*",
     "laminas/laminas-navigation": "2.9.*",
-    "laminas/laminas-form": "2.14.*",
+    "laminas/laminas-form": "2.14.* || 2.15.*",
     "laminas/laminas-view": "2.11.*",
     "laminas/laminas-i18n": "2.10.*"
   },
