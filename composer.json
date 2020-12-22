@@ -23,12 +23,12 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "php": "^7.2",
-    "laminas/laminas-servicemanager": "3.3.* || 3.4.* || 3.5.*",
-    "laminas/laminas-navigation": "2.9.*",
-    "laminas/laminas-form": "2.14.*",
-    "laminas/laminas-view": "2.11.*",
-    "laminas/laminas-i18n": "2.10.*"
+    "php": "^7.4 || ^8.0",
+    "laminas/laminas-servicemanager": "3.5.*",
+    "laminas/laminas-navigation": "^2.9",
+    "laminas/laminas-form": "^2.15",
+    "laminas/laminas-view": "^2.11",
+    "laminas/laminas-i18n": "^2.11"
   },
   "require-dev": {
     "iteaoffice/testing": "^2.1"
@@ -40,8 +40,8 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0-dev",
-      "dev-develop": "2.1-dev"
+      "dev-master": "2.2-dev",
+      "dev-develop": "2.3-dev"
     }
   },
   "scripts": {
