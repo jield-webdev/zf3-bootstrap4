@@ -26,6 +26,7 @@ return [
         'invokables' => [
             'zf3b4formdescription'   => View\Helper\FormDescription::class,
             'zf3b4forminput'         => View\Helper\FormInput::class,
+            'zf3b4formdatetimelocal' => View\Helper\FormDateTimeLocal::class,
             'zf3b4formfile'          => View\Helper\FormFile::class,
             'zf3b4formradio'         => View\Helper\FormRadio::class,
             'zf3b4formcheckbox'      => View\Helper\FormCheckbox::class,

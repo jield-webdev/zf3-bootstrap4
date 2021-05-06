@@ -26,7 +26,7 @@ class FormElement extends Helper\FormElement
             'file'           => 'zf3b4formfile',
             'textarea'       => 'zf3b4formtextarea',
             'radio'          => 'zf3b4formradio',
-            'datetime'       => 'zf3b4forminput',
+            'datetime'       => 'zf3b4formdatetimelocal',
             'date'           => 'zf3b4forminput',
             'select'         => 'zf3b4formselect',
             'multi_checkbox' => 'zf3b4formmulticheckbox',
@@ -145,6 +145,7 @@ class FormElement extends Helper\FormElement
             //Produce the label
             $label           = $this->findLabel($element);
             $renderedElement = $this->renderHelper($this->typeMap[$type], $element);
+
             $description     = $this->parseDescription($element);
             $error           = $this->hasFormElementError($element) ? $this->parseFormElementError($element) : null;
 
