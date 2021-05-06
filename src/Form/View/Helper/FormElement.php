@@ -31,7 +31,7 @@ class FormElement extends Helper\FormElement
             'file'           => 'zf3b4formfile',
             'textarea'       => 'zf3b4formtextarea',
             'radio'          => 'zf3b4formradio',
-            'datetimelocal'  => 'zf3b4formdatetimelocal',
+            'datetime-local'  => 'zf3b4formdatetimelocal',
             'date'           => 'zf3b4forminput',
             'select'         => 'zf3b4formselect',
             'multi_checkbox' => 'zf3b4formmulticheckbox',
