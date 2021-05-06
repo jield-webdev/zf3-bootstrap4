@@ -12,6 +12,10 @@ use Laminas\View\HelperPluginManager;
 use function md5;
 use function sprintf;
 
+/**
+ * Class FormElement
+ * @package Zf3Bootstrap4\Form\View\Helper
+ */
 class FormElement extends Helper\FormElement
 {
     protected $typeMap
@@ -20,13 +24,14 @@ class FormElement extends Helper\FormElement
             'email'          => 'zf3b4forminput',
             'number'         => 'zf3b4forminput',
             'color'          => 'zf3b4forminput',
+            'datetime'       => 'zf3b4forminput',
             'password'       => 'zf3b4forminput',
             'url'            => 'zf3b4forminput',
             'checkbox'       => 'zf3b4formcheckbox',
             'file'           => 'zf3b4formfile',
             'textarea'       => 'zf3b4formtextarea',
             'radio'          => 'zf3b4formradio',
-            'datetime'       => 'zf3b4formdatetimelocal',
+            'datetimelocal'  => 'zf3b4formdatetimelocal',
             'date'           => 'zf3b4forminput',
             'select'         => 'zf3b4formselect',
             'multi_checkbox' => 'zf3b4formmulticheckbox',
@@ -146,8 +151,8 @@ class FormElement extends Helper\FormElement
             $label           = $this->findLabel($element);
             $renderedElement = $this->renderHelper($this->typeMap[$type], $element);
 
-            $description     = $this->parseDescription($element);
-            $error           = $this->hasFormElementError($element) ? $this->parseFormElementError($element) : null;
+            $description = $this->parseDescription($element);
+            $error       = $this->hasFormElementError($element) ? $this->parseFormElementError($element) : null;
 
             $wrapper = $this->horizontalWrapper;
 
