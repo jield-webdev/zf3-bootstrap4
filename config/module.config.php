@@ -11,22 +11,21 @@ return [
             'zf3b4navigation'     => Helper\Navigation::class,
             'ztbnavigation'       => Helper\Navigation::class,
             'filterbarelement'    => View\Helper\FilterBarElement::class,
-            'filtercolumnelement' => View\Helper\FilterColumnElement::class,
             'ztbformelement'      => View\Helper\FormElement::class,
             'ztbformdescription'  => 'zf3b4formdescription',
+            'lbs5formdescription' => 'zf3b4formdescription',
+            'lbs5formselect'      => 'zf3b4formselect',
             'ztbalert'            => 'zf3b4alert',
 
         ],
         'factories'  => [
-            Helper\Navigation::class               => Navigation\View\NavigationHelperFactory::class,
-            View\Helper\FormElement::class         => ConfigAbstractFactory::class,
-            View\Helper\FilterBarElement::class    => ConfigAbstractFactory::class,
-            View\Helper\FilterColumnElement::class => ConfigAbstractFactory::class,
+            Helper\Navigation::class            => Navigation\View\NavigationHelperFactory::class,
+            View\Helper\FormElement::class      => ConfigAbstractFactory::class,
+            View\Helper\FilterBarElement::class => ConfigAbstractFactory::class,
         ],
         'invokables' => [
             'zf3b4formdescription'   => View\Helper\FormDescription::class,
             'zf3b4forminput'         => View\Helper\FormInput::class,
-            'zf3b4formdatetimelocal' => View\Helper\FormDateTimeLocal::class,
             'zf3b4formfile'          => View\Helper\FormFile::class,
             'zf3b4formradio'         => View\Helper\FormRadio::class,
             'zf3b4formcheckbox'      => View\Helper\FormCheckbox::class,
@@ -38,15 +37,11 @@ return [
         ],
     ],
     ConfigAbstractFactory::class => [
-        View\Helper\FormElement::class         => [
+        View\Helper\FormElement::class      => [
             'ViewHelperManager',
             \Laminas\I18n\Translator\TranslatorInterface::class
         ],
-        View\Helper\FilterBarElement::class    => [
-            'ViewHelperManager',
-            \Laminas\I18n\Translator\TranslatorInterface::class
-        ],
-        View\Helper\FilterColumnElement::class => [
+        View\Helper\FilterBarElement::class => [
             'ViewHelperManager',
             \Laminas\I18n\Translator\TranslatorInterface::class
         ]
