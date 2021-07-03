@@ -109,11 +109,18 @@ class FilterBarElement extends FormElement
                                              
                     </li>';
 
+        $facetWrapperSelect = '<li class="nav-item" style="width: 200px;">%s</li>';
 
         $counter = 1;
         /** @var MultiCheckbox $facet */
         foreach ($element->get('facet') as $facet) {
-            $facets[] = \sprintf($facetWrapper, $counter, $facet->getLabel(), $counter, $this->renderRaw($facet));
+            $type = $facet->getAttribute('type');
+
+            if ($type === 'select') {
+                $facets[] = \sprintf($facetWrapperSelect, $this->renderRaw($facet));
+            } else {
+                $facets[] = \sprintf($facetWrapper, $counter, $facet->getLabel(), $counter, $this->renderRaw($facet));
+            }
             $counter++;
         }
 
@@ -123,6 +130,7 @@ class FilterBarElement extends FormElement
     private function renderRaw(ElementInterface $element): ?string
     {
         $type = $element->getAttribute('type');
+
         switch ($type) {
             case 'multi_checkbox':
                 //Get the helper
@@ -131,8 +139,13 @@ class FilterBarElement extends FormElement
                 $formMultiCheckbox->setTemplate(
                     '<div class="dropdown-item"><div class="form-check %s">%s%s%s%s</div></div>'
                 );
-
                 return $formMultiCheckbox->render($element);
+            case 'select':
+                //Get the helper
+                /** @var FormSearch $formSearch */
+                $formSearch = $this->getView()->plugin('zf3b4formsearch');
+
+                return $formSearch->render($element);
             case 'radio':
                 //Get the helper
                 /** @var FormMultiCheckbox $formMultiCheckbox */

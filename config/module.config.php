@@ -29,6 +29,7 @@ return [
             'zf3b4forminput'         => View\Helper\FormInput::class,
             'zf3b4formdatetimelocal' => View\Helper\FormDateTimeLocal::class,
             'zf3b4formfile'          => View\Helper\FormFile::class,
+            'zf3b4formsearch'        => View\Helper\FormSearch::class,
             'zf3b4formradio'         => View\Helper\FormRadio::class,
             'zf3b4formcheckbox'      => View\Helper\FormCheckbox::class,
             'zf3b4formlabel'         => View\Helper\FormLabel::class,
@@ -39,11 +40,11 @@ return [
         ],
     ],
     ConfigAbstractFactory::class => [
-        View\Helper\FormElement::class      => [
+        View\Helper\FormElement::class         => [
             'ViewHelperManager',
             \Laminas\I18n\Translator\TranslatorInterface::class
         ],
-        View\Helper\FilterBarElement::class => [
+        View\Helper\FilterBarElement::class    => [
             'ViewHelperManager',
             \Laminas\I18n\Translator\TranslatorInterface::class
         ],
